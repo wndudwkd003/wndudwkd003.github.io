@@ -1,0 +1,206 @@
+/* 화면 전체에서 가운데 카드 하나 놓는 컨테이너 */
+.app-page {
+    min-height: 100vh; /* 화면 높이 기준 */
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 30px 30px; /* 바깥 여백 */
+}
+
+/* 가운데 카드 */
+.app-shell {
+    display: flex;
+    width: 100%;
+    max-width: 1600px; /* 필요하면 유지 */
+    height: calc(100vh - 60px); /* 이 줄 추가: 60 = 위·아래 padding 30px * 2 */
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15);
+    overflow: hidden; /* 카드 밖으로 넘치는 건 숨김 */
+}
+
+/* 프로필 영역: 세로 정렬, 가운데 정렬 */
+.app-profile {
+    display: flex;
+    flex-direction: column; /* 위→아래로 쌓이게 */
+    align-items: center; /* 가로 가운데 정렬 */
+    gap: 20px;
+    margin-top: 26px;
+    text-align: center;
+}
+
+.app-profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 9999px;
+    object-fit: cover;
+    border: 1px solid #e5e7eb;
+    background-color: #e5e7eb;
+}
+
+/* 이름 */
+.app-profile-name {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+/* 간단 설명 (두 줄 정도) */
+.app-profile-desc {
+    font-size: 14px;
+    color: #6b7280;
+    line-height: 1.4;
+}
+
+.app-profile-univ {
+    font-weight: 500;
+    text-decoration: none;
+
+    background: linear-gradient(90deg, #2563eb, #ec4899); /* 파랑 → 분홍 */
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent; /* 배경 그라데이션만 보이게 */
+
+    transition: opacity 0.15s ease;
+}
+
+.app-profile-univ:hover {
+    opacity: 0.8; /* 살짝 어두워지게 */
+}
+
+/* 한 줄 메시지 */
+.app-profile-message {
+    margin-top: 4px;
+    font-size: 24px;
+    color: #000000;
+    line-height: 1.4;
+    font-family: "Dongle", sans-serif; /* Dongle 폰트 적용 */
+    font-weight: 400; /* Regular 400 */
+}
+
+/* ===== 왼쪽 사이드바 ===== */
+
+.app-sidebar {
+    width: 260px;
+    padding: 16px 18px;
+    border-right: 1px solid #e0e0e0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background-color: #fafafa;
+    height: 100%;
+}
+
+.app-sidebar-header {
+    margin-bottom: 5px;
+}
+
+.app-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 4px;
+}
+
+.app-logo-mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 28px;
+    border-radius: 8px;
+    background-color: #2563eb;
+    color: white;
+    font-size: 16px;
+    font-weight: 700;
+    margin-top: 10px;
+    margin-left: 30px;
+}
+
+.app-logo-text {
+    font-weight: 600;
+    font-size: 22px;
+    margin-top: 10px;
+    margin-left: 5px;
+}
+
+.app-sidebar-subtitle {
+    font-size: 11px;
+    color: #666;
+}
+
+/* ===== 네비게이션 메뉴 ===== */
+
+.app-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 12px;
+
+    padding-top: 28px; /* 선과 메뉴 사이 여백 */
+    border-top: 1px solid #e5e7eb; /* 프로필과 메뉴 사이 가로선 */
+}
+
+.app-nav-link {
+    display: block;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 16px;
+    color: #333;
+    text-decoration: none;
+    transition: background-color 0.12s ease, color 0.12s ease;
+}
+
+.app-nav-link:hover {
+    background-color: #e5e7eb;
+}
+
+.app-nav-link-active {
+    background-color: #2563eb;
+    color: #ffffff;
+}
+
+/* ===== 사이드바 푸터 ===== */
+
+.app-sidebar-footer-contact {
+    font-size: 11px;
+    color: #6b7280;
+    margin-top: 8px; /* ← 선과 Contact 사이 위쪽 간격 추가 */
+    margin-bottom: 6px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #e5e5e5;
+    line-height: 1.4;
+}
+
+.app-sidebar-footer-link {
+    display: block;
+    margin-top: 8px; /* Contact 아래 / 이메일 사이 간격 */
+    margin-bottom: 8px;
+    color: #2563eb;
+    text-decoration: none;
+}
+
+.app-sidebar-footer-link:hover {
+    text-decoration: underline;
+}
+
+.app-sidebar-footer {
+    margin-top: auto;
+    padding-top: 8px;
+    border-top: 1px solid #e5e5e5;
+}
+
+.app-sidebar-footer-text {
+    font-size: 11px;
+    color: #888;
+}
+
+/* ===== 오른쪽 메인 영역 ===== */
+
+.app-main {
+    flex: 1;
+    padding: 24px 32px;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    overflow-y: auto; /* 이 줄 추가: 세로 스크롤 */
+}

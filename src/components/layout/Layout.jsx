@@ -1,31 +1,73 @@
-import { Link } from "react-router-dom";
+// src/components/layout/Layout.jsx
+import { Link, useLocation } from "react-router-dom";
 import { siteConfig } from "../../config/siteConfig";
+import profileImg from "../../assets/profile.gif";
+import "./Layout.css";
 
 export function Layout({ children }) {
-  return (
-    <div className="min-h-screen flex flex-col">
-      <header className="border-b">
-        <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
-          <Link to="/" className="font-semibold text-lg">
-            {siteConfig.title}
-          </Link>
-          <nav className="flex gap-4 text-sm">
-            {siteConfig.navItems.map((item) => (
-              <Link key={item.path} to={item.path}>
-                {item.label}
-              </Link>
-            ))}
-          </nav>
-        </div>
-      </header>
+    const location = useLocation();
 
-      <main className="flex-1 max-w-5xl mx-auto px-4 py-8">{children}</main>
+    return (
+        <div className="app-page">
+            <div className="app-shell">
+                <aside className="app-sidebar">
+                    <div className="app-sidebar-header">
+                        <div className="app-logo">
+                            <span className="app-logo-mark">KJY</span>
+                            <span className="app-logo-text">Portfolio</span>
+                        </div>
+                        <div className="app-profile">
+                            <img src={profileImg} alt="Profile" className="app-profile-image" />
 
-      <footer className="border-t mt-8">
-        <div className="max-w-5xl mx-auto px-4 py-4 text-xs text-gray-500">
-          © {new Date().getFullYear()} Portfolio. All rights reserved.
+                            <div className="app-profile-name">Juyoung Kim</div>
+
+                            <div className="app-profile-desc">
+                                Master's Student, CSE
+                                <br />
+                                <a href="https://www.gnu.ac.kr/" target="_blank" rel="noreferrer" className="app-profile-univ">
+                                    Gyeongsang National University
+                                </a>
+                            </div>
+
+                            <div className="app-profile-message">GPT 찬양해</div>
+                        </div>
+                    </div>
+
+                    <nav className="app-nav">
+                        {siteConfig.navItems.map((item) => {
+                            const isActive = item.path === "/" ? location.pathname === "/" : location.pathname.startsWith(item.path);
+
+                            return (
+                                <Link key={item.path} to={item.path} className={"app-nav-link" + (isActive ? " app-nav-link-active" : "")}>
+                                    {item.label}
+                                </Link>
+                            );
+                        })}
+                    </nav>
+
+                    <footer className="app-sidebar-footer">
+                        {/* Contact 영역 */}
+                        <div className="app-sidebar-footer-contact">
+                            Contact 📩
+                            <a href="mailto:your_email@example.com" className="app-sidebar-footer-link">
+                                ymail3@naver.com
+                            </a>
+                            <a href="mailto:wndudwkd003@gnu.ac.kr" className="app-sidebar-footer-link">
+                                wndudwkd003@gnu.ac.kr
+                            </a>
+                        </div>
+
+                        {/* 저작권 + Assisted by */}
+                        <span className="app-sidebar-footer-text">
+                            © {new Date().getFullYear()} Juyoung Kim
+                            <br />
+                            Assisted by ChatGPT. 진짜 최고 😗😆
+                        </span>
+                    </footer>
+                </aside>
+
+                <main className="app-main">{children}</main>
+            </div>
         </div>
-      </footer>
-    </div>
-  );
+    );
 }
