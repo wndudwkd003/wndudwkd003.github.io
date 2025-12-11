@@ -4,7 +4,7 @@
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    padding: 35px;
+    padding: 30px;
 }
 
 /* 가운데 카드 */
@@ -12,7 +12,7 @@
     display: flex;
     width: 100%;
     max-width: 1600px;
-    height: calc(100vh - 70px); /* 30px * 2 */
+    height: calc(100vh - 60px); /* 30px * 2 */
     background-color: #fff;
     border-radius: 16px;
     overflow: hidden;
@@ -34,43 +34,6 @@
 
     .app-shell {
         height: 100vh; /* 전체 화면 사용 */
-    }
-}
-
-@media (max-width: 768px) {
-    /* app-shell 을 모바일에서는 "카드"가 아니라 "일반 컨테이너"로 동작하게 함 */
-    .app-shell {
-        flex-direction: column !important;
-        height: auto !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        border-radius: 0 !important;
-        overflow: visible !important;
-    }
-
-    .app-page {
-        padding: 0 !important;
-        align-items: stretch !important;
-    }
-
-    /* 사이드바가 전체 화면 상단으로 */
-    .app-sidebar {
-        order: 1 !important;
-        width: 100% !important;
-        height: auto !important;
-        overflow: visible !important;
-        border-right: none !important;
-        border-bottom: 1px solid #e5e5e5 !important;
-    }
-
-    /* 메인 콘텐츠가 아래로 */
-    .app-main {
-        order: 2 !important;
-        width: 100% !important;
-        height: auto !important;
-        overflow: visible !important;
-        padding: 24px 20px !important;
-        display: block !important;
     }
 }
 
