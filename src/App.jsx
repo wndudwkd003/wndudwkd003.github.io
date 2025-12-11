@@ -1,5 +1,5 @@
 // src/App.jsx
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import { HomePage } from "./routes/HomePage";
 import { ProjectsPage } from "./routes/ProjectsPage";
 import { PublicationsPage } from "./routes/PublicationsPage";
@@ -8,7 +8,7 @@ import { AwardsPage } from "./routes/AwardsPage";
 
 function App() {
     return (
-        <BrowserRouter>
+        <HashRouter>
             <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/projects" element={<ProjectsPage />} />
@@ -16,7 +16,7 @@ function App() {
                 <Route path="/awards" element={<AwardsPage />} />
                 <Route path="/other" element={<OtherPage />} />
             </Routes>
-        </BrowserRouter>
+        </HashRouter>
     );
 }
 
