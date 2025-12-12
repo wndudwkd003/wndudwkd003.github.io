@@ -214,55 +214,41 @@
     color: #888;
 }
 
-
 /* ===== Awards Page & Cards ===== */
 
-.awards-title {
-    font-size: 24px;
-    font-weight: 600;
-    margin-bottom: 8px;
-}
-
-.awards-description {
-    font-size: 14px;
-    color: #4b5563;
-    margin-bottom: 16px;
-}
-
-/* 카드들을 감싸는 그리드 */
-/* 카드들을 세로로 쌓되, 가로는 전체 폭 사용 */
 .awards-grid {
     display: flex;
     flex-direction: column;
     gap: 16px;
 }
 
-
-@media (min-width: 768px) {
-    .awards-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-}
-
-@media (min-width: 1024px) {
-    .awards-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-}
-
-/* 개별 카드 */
+/* 카드 컨테이너 */
 .award-card {
-    display: flex;
-    gap: 12px;
-    padding: 16px;
     background-color: #ffffff;
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(15, 23, 42, 0.07);
     border: 1px solid #e5e7eb;
+    overflow: hidden;
+}
+
+/* 카드 헤더(클릭해서 펼침) */
+.award-card-head {
+    width: 100%;
+    display: flex;
+    gap: 12px;
+    padding: 16px;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    text-align: left;
     align-items: flex-start;
 }
 
-/* 썸네일: 고정 크기 + 둥근 모서리 */
+.award-card-head:hover {
+    background-color: #f9fafb;
+}
+
+/* 썸네일 */
 .award-thumb-wrapper {
     width: 180px;
     height: 180px;
@@ -311,7 +297,6 @@
     line-height: 1.5;
 }
 
-/* 태그 */
 .award-tags {
     margin-top: 6px;
     display: flex;
@@ -327,20 +312,212 @@
     color: #4b5563;
 }
 
-/* 파일 링크 영역 */
-.award-files {
+/* 오른쪽 ▼ 아이콘 */
+.award-toggle-icon {
+    margin-left: auto;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    color: #374151;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: transform 0.15s ease;
+}
+
+.award-toggle-icon.is-open {
+    transform: rotate(180deg);
+}
+
+/* 펼쳐지는 영역 */
+.award-expand {
+    border-top: 1px solid #e5e7eb;
+    padding: 14px 16px 16px;
+    display: grid;
+    gap: 12px;
+}
+
+/* 슬라이더 */
+.award-slider-stage {
+    position: relative;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #f3f4f6;
+}
+
+.award-slider-img {
+    width: 100%;
+    height: 340px;
+    object-fit: contain;
+    display: block;
+}
+
+.award-slider-controls {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+
+.award-slider-btn {
+    width: 34px;
+    height: 34px;
+    border-radius: 999px;
+    border: 1px solid #e5e7eb;
+    background-color: #ffffff;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+}
+
+.award-slider-btn:disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+.award-slider-dots {
     margin-top: 8px;
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+}
+
+.award-dot {
+    width: 10px;
+    height: 10px;
+    padding: 0;
+    border-radius: 50%;
+    border: 1px solid #d1d5db;
+    background-color: #ffffff;
+    cursor: pointer;
+
+    appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+    box-sizing: border-box;
+    line-height: 0;
+}
+
+.award-dot.is-active {
+    background-color: #2563eb;
+    border-color: #2563eb;
+}
+
+/* 다운로드 섹션 */
+.award-downloads {
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 12px;
+    background-color: #ffffff;
+}
+
+.award-downloads-title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 8px;
+}
+
+/* 파일 링크 */
+.award-files {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
 }
 
 .award-file-link {
-    font-size: 12px;
-    color: #2563eb;
-    text-decoration: underline;
+    max-width: 320px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .award-file-link:hover {
     text-decoration: none;
+}
+
+/* 슬라이더 이미지: 클릭 가능 표시 */
+.award-slider-img {
+    cursor: zoom-in;
+}
+.award-lightbox-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 16px; /* 300px 절대 쓰지 마세요 */
+}
+
+.award-lightbox {
+    position: relative;
+    width: min(820px, 92vw); /* 1100px → 820px, 화면에선 92vw */
+    max-height: 80vh; /* 90vh → 80vh */
+    background: #ffffff;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+}
+
+.award-lightbox-img {
+    width: 100%; /* 80% → 100% */
+    height: auto;
+    max-height: 80vh; /* 박스와 동일하게 */
+    object-fit: contain;
+    display: block;
+    background: #ffffff;
+}
+
+/* 오른쪽 상단 닫기 버튼 */
+.award-lightbox-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+
+    width: 34px;
+    height: 34px;
+    border-radius: 9999px;
+
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    cursor: pointer;
+
+    font-size: 20px;
+    line-height: 1;
+}
+
+.award-slider-controls {
+    pointer-events: none;
+}
+
+.award-slider-btn {
+    pointer-events: auto;
+}
+
+/* 심플 헤더: 위/아래 선만 */
+.awards-header {
+    padding: 12px 0;
+    margin: 0 0 14px;
+}
+
+.awards-title {
+    font-size: 22px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.awards-description {
+    font-size: 13px;
+    color: #4b5563;
+    margin: 6px 0 0;
+    line-height: 1.5;
 }
