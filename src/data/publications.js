@@ -46,6 +46,7 @@ export const publications = [
         date: "2025-10-15",
         authors: "Ju-Young Kim, Ji-Hong Park and Gun-Woo Kim",
         note: "Main Track",
+        url: "https://d2j16w31g89z0j.cloudfront.net/site/ictc2026/abs/P04-3.pdf"
     },
 
     {
@@ -217,5 +218,16 @@ export const publications = [
         authors: "김주영, 박지홍, 차도훈, 문선웅, 김민기, 김건우",
         note: "포스터 발표 (우수논문상, 학부생부문 장려상) ",
         url: "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE11862385"
+    },
+
+    {
+        id: "dom-conf-2023-11-01",
+        category: "국내 학회",
+        title: "Three.js 기반 실로폰 동작 원리 학습을 위한 3차원 아르키메데스 와선형 실로폰 시스템의 구현",
+        venue: "2023년 한국정보기술학회 추계종합학술대회 및 대학생논문경진대회",
+        date: "2023-11-01",
+        authors: "김주영, 이기열, 손용숙, 김봉기, 김현주",
+        note: "포스터 발표 (우수논문상, 동상)",
+        url: "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE11652097"
     },
 ];

@@ -262,48 +262,48 @@ function AwardCard({ award, expanded, onToggle }) {
           {(downImages.length > 0 ||
             downPdfs.length > 0 ||
             downOthers.length > 0) && (
-            <section className="award-downloads" aria-label="다운로드">
-              <div className="award-downloads-title">Downloads</div>
+              <section className="award-downloads" aria-label="다운로드">
+                <div className="award-downloads-title">Downloads</div>
 
-              <div className="award-files">
-                {downImages.map((file, i) => (
-                  <a
-                    key={`${award.id}-down-img-${i}`}
-                    href={file.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="award-file-link"
-                  >
-                    {getFileLabel(file)}
-                  </a>
-                ))}
+                <div className="award-files">
+                  {downImages.map((file, i) => (
+                    <a
+                      key={`${award.id}-down-img-${i}`}
+                      href={file.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="award-file-link"
+                    >
+                      {getFileLabel(file)}
+                    </a>
+                  ))}
 
-                {downPdfs.map((file, i) => (
-                  <a
-                    key={`${award.id}-down-pdf-${i}`}
-                    href={file.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="award-file-link"
-                  >
-                    {getFileLabel(file)}
-                  </a>
-                ))}
+                  {downPdfs.map((file, i) => (
+                    <a
+                      key={`${award.id}-down-pdf-${i}`}
+                      href={file.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="award-file-link"
+                    >
+                      {getFileLabel(file)}
+                    </a>
+                  ))}
 
-                {downOthers.map((file, i) => (
-                  <a
-                    key={`${award.id}-down-etc-${i}`}
-                    href={file.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="award-file-link"
-                  >
-                    {getFileLabel(file)}
-                  </a>
-                ))}
-              </div>
-            </section>
-          )}
+                  {downOthers.map((file, i) => (
+                    <a
+                      key={`${award.id}-down-etc-${i}`}
+                      href={file.url}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="award-file-link"
+                    >
+                      {getFileLabel(file)}
+                    </a>
+                  ))}
+                </div>
+              </section>
+            )}
         </div>
       )}
     </article>
@@ -351,7 +351,7 @@ export function AwardsPage() {
       <header className="awards-header">
         <h2 className="awards-title">Awards</h2>
         <p className="awards-description">
-          수상, 장학금, 대회 성적 등을 정리한 페이지입니다.
+          대회 수상, 성적 등을 정리한 페이지입니다.
         </p>
       </header>
 

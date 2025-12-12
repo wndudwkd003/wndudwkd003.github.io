@@ -581,11 +581,11 @@
     font-weight: 700;
     color: #cfcfcf;
     /* 회색 유지 */
-    padding: 0px;
+    padding: 10px;
 }
 
 .publications-page .awards-divider {
-    margin: 20px;
+    margin-bottom: 40px;
     /* 위아래 여백 (원하면 조절) */
 }
 
