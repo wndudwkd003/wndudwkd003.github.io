@@ -7,7 +7,6 @@ import { awards } from "../data/awards";
 const DEFAULT_IMAGE_EXTS = ["jpg", "png", "jpeg", "webp"];
 
 function formatDisplayDate(dateStr) {
-  // dateStr: "YYYY-MM-DD"
   if (!dateStr) return "";
   return dateStr.slice(0, 7).replace("-", ".");
 }
@@ -42,23 +41,21 @@ function splitFiles(fileList) {
 function getFileLabel(file) {
   if (file.label && String(file.label).trim().length > 0) return file.label;
 
-  const fileName = file.file || "";
-  if (fileName) return fileName.split("/").pop() || fileName;
-
-  const url = file.url || "";
-  return url.split("/").pop() || "file";
+  const raw = (file.file || file.url || "").split("/").pop() || "file";
+  const lastDot = raw.lastIndexOf(".");
+  if (lastDot > 0) return raw.slice(0, lastDot);
+  return raw;
 }
 
-
-
 function normalizeAward(award) {
-  const dir = award.dir || "";
+  const dir = `/awards/${award.id}`;
+
   const count = award.images?.count || 0;
   const exts = award.images?.exts || DEFAULT_IMAGE_EXTS;
 
   const images = Array.from({ length: count }, (_, i) => ({
     type: "image",
-    base: `${dir}/a${i + 1}`, // 확장자 없이 base만
+    base: `${dir}/a${i + 1}`,
     exts,
     label: `사진 ${i + 1}`,
   }));
@@ -103,7 +100,6 @@ function SmartImage({ base, exts, alt, className, onClick }) {
     />
   );
 }
-
 
 function AwardCard({ award, expanded, onToggle }) {
   const normalized = useMemo(() => normalizeAward(award), [award]);
@@ -263,7 +259,9 @@ function AwardCard({ award, expanded, onToggle }) {
             </section>
           )}
 
-          {(downImages.length > 0 || downPdfs.length > 0 || downOthers.length > 0) && (
+          {(downImages.length > 0 ||
+            downPdfs.length > 0 ||
+            downOthers.length > 0) && (
             <section className="award-downloads" aria-label="다운로드">
               <div className="award-downloads-title">Downloads</div>
 
@@ -326,8 +324,8 @@ export function AwardsPage() {
     let prevMonth = null;
 
     for (const award of sortedAwards) {
-      const monthKey = award.date.slice(0, 7); // "YYYY-MM"
-      const monthLabel = monthKey.replace("-", "."); // "YYYY.MM"
+      const monthKey = award.date.slice(0, 7);
+      const monthLabel = monthKey.replace("-", ".");
 
       if (monthKey !== prevMonth) {
         out.push({
