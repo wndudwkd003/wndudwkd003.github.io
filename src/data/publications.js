@@ -54,7 +54,7 @@ export const publications = [
         category: "국제 학회",
         title: "SCU-CGAN: Enhancing Fire Detection through Synthetic Fire Image Generation and Dataset Augmentation",
         venue: "The 8th International Conference on Mobile Internet Security (MobiSec) 2024",
-        date: "2025-10-15",
+        date: "2024-12-19",
         authors: "Ju-Young Kim, Ji-Hong Park and Gun-Woo Kim",
         note: "Main Track (not in proceedings)",
         url: "https://arxiv.org/abs/2512.08362"

@@ -57,7 +57,7 @@ export function PublicationsPage() {
         <header className="awards-header">
           <h2 className="awards-title">Publications</h2>
           <p className="awards-description">
-            논문, 학회 발표 등 출판 이력을 정리하는 페이지입니다.
+            논문, 학회 발표 등 출판 이력 정리
           </p>
         </header>
 
