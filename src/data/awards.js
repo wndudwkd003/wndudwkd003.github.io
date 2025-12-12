@@ -1,7 +1,5 @@
 // src/data/awards.js
 
-
-
 export const awards = [
   {
     id: "f1tenth-kc4_2025-11-6_1",
@@ -10,6 +8,18 @@ export const awards = [
     date: "2025-11-06",
     description: "국제 자율주행 플랫폼 경주 대회",
     tags: ["자율주행", "경진대회"],
+
+    images: { count: 4 },
+    downloads: [],
+  },
+
+  {
+    id: "ictc2025_2025-10-15_1",
+    title: "The 16th International Conference on ICT Convergence (ICTC 2025)",
+    org: "IEEE ICTC 2025",
+    date: "2025-11-06",
+    description: "ICTC 국제 학술대회",
+    tags: ["학술대회"],
 
     images: { count: 4 },
     downloads: [],
@@ -40,5 +50,31 @@ export const awards = [
     downloads: [
       { type: "pdf", file: "상장파일.pdf", down: true },
     ],
+  },
+
+  {
+    id: "f1tenth-iv2024_2024-06-05",
+    title: "F1 Tenth Autonomous Racing Competition IV 2024 Race Winner 1st Place",
+    org: "F1Tenth, The IEEE Intelligent Vehicles Symposium (IV) Jeju Korea",
+    date: "2024-06-05",
+    description: "국제 자율주행 경주 대회 우승",
+    tags: ["자율주행", "경진대회"],
+
+    images: { count: 6 },
+    downloads: [
+      { type: "pdf", file: "race_winner.pdf", down: true },
+    ],
+  },
+
+  {
+    id: "f1tenth-icra2024_2024-05-14",
+    title: "F1 Tenth Autonomous Racing Competition ICRA 2024",
+    org: "F1Tenth, IEEE Robotics & Automation Society (ICRA 2024) YOKOHAMA Japan",
+    date: "2024-05-14",
+    description: "국제 자율주행 경주 대회 참가",
+    tags: ["자율주행", "경진대회"],
+
+    images: { count: 8 },
+    downloads: [],
   },
 ];

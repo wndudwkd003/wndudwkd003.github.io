@@ -6,7 +6,7 @@ export const siteConfig = {
         { path: "/", label: "Home" },
         { path: "/projects", label: "Projects" },
         { path: "/publications", label: "Publications" },
-        { path: "/awards", label: "Awards" },
+        { path: "/awards", label: "Activities" },
         { path: "/other", label: "Other" },
     ],
 };

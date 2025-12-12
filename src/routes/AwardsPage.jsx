@@ -4,7 +4,7 @@ import { createPortal } from "react-dom";
 import { Layout } from "../components/layout/Layout";
 import { awards } from "../data/awards";
 
-const DEFAULT_IMAGE_EXTS = ["jpg", "png", "jpeg", "webp"];
+const DEFAULT_IMAGE_EXTS = ["jpg", "png", "jpeg", "webp", "gif"];
 
 function formatDisplayDate(dateStr) {
   if (!dateStr) return "";
@@ -349,9 +349,9 @@ export function AwardsPage() {
   return (
     <Layout>
       <header className="awards-header">
-        <h2 className="awards-title">Awards</h2>
+        <h2 className="awards-title">Activities & Awards</h2>
         <p className="awards-description">
-          대회 수상, 성적 등을 정리한 페이지입니다.
+          교내외 활동 및 대회 수상, 성적 정리
         </p>
       </header>
 
