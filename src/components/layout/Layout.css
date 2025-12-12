@@ -521,3 +521,25 @@
     margin: 6px 0 0;
     line-height: 1.5;
 }
+
+
+.awards-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 18px 0 10px;
+  color: #9ca3af; /* 회색 글자 */
+  font-size: 12px;
+}
+
+.awards-divider::before,
+.awards-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #e5e7eb; /* 연한 회색 라인 */
+}
+
+.awards-divider-text {
+  white-space: nowrap;
+}
