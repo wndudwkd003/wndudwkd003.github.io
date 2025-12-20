@@ -26,6 +26,7 @@ export const publications = [
         date: "2025-12-17",
         authors: "Ju-Young Kim, Ji-Hong Park, Myeongjun Kim and Gun-Woo Kim",
         note: "Poster Track",
+        url: "https://arxiv.org/abs/2512.11865",
     },
 
     {
@@ -46,7 +47,7 @@ export const publications = [
         date: "2025-10-15",
         authors: "Ju-Young Kim, Ji-Hong Park and Gun-Woo Kim",
         note: "Main Track",
-        url: "https://d2j16w31g89z0j.cloudfront.net/site/ictc2026/abs/P04-3.pdf"
+        url: "https://d2j16w31g89z0j.cloudfront.net/site/ictc2026/abs/P04-3.pdf",
     },
 
     {
@@ -57,10 +58,8 @@ export const publications = [
         date: "2024-12-19",
         authors: "Ju-Young Kim, Ji-Hong Park and Gun-Woo Kim",
         note: "Main Track (not in proceedings)",
-        url: "https://arxiv.org/abs/2512.08362"
+        url: "https://arxiv.org/abs/2512.08362",
     },
-
-
 
     // =========================
     // 국내 저널
@@ -73,7 +72,7 @@ export const publications = [
         date: "2025-01-01",
         authors: "김주영, 박지홍, 김건우",
         note: "(KCI 등재지)",
-        url: "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12039155"
+        url: "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12039155",
     },
 
     {
@@ -84,7 +83,7 @@ export const publications = [
         date: "2025-01-01",
         authors: "박지홍, 김주영, 임소희, 김건우",
         note: "(KCI 등재지)",
-        url: "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12039152"
+        url: "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12039152",
     },
 
     // =========================
@@ -118,7 +117,7 @@ export const publications = [
         date: "2025-10-01",
         authors: "박지홍, 김주영, 이세연, 박수진, 김건우",
         note: "구두 발표 (최우수논문상, 문화체육관광부 장관상)",
-        url: "https://koreascience.kr/article/CFKO202533532421637.pub?&lang=ko&orgId=sighlt"
+        url: "https://koreascience.kr/article/CFKO202533532421637.pub?&lang=ko&orgId=sighlt",
     },
 
     {
@@ -129,7 +128,7 @@ export const publications = [
         date: "2025-10-01",
         authors: "김주영, 박지홍, 이세연, 박수진, 김건우",
         note: "구두 발표 (우수논문상, 국립국어원장상)",
-        url: "https://koreascience.kr/article/CFKO202533654035400.pub?&lang=ko&orgId=sighlt"
+        url: "https://koreascience.kr/article/CFKO202533654035400.pub?&lang=ko&orgId=sighlt",
     },
 
     {
@@ -140,7 +139,7 @@ export const publications = [
         date: "2025-07-02",
         authors: "박지홍, 김주영, 김명준, 김건우",
         note: "포스터 발표",
-        url: "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12318210"
+        url: "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12318210",
     },
 
     {
@@ -151,7 +150,7 @@ export const publications = [
         date: "2024-11-28",
         authors: "김주영, 박지홍, 차도훈, 문선웅, 김민기, 김건우",
         note: "포스터 발표",
-        url: "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12295314"
+        url: "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12295314",
     },
 
     {
@@ -162,7 +161,7 @@ export const publications = [
         date: "2024-11-28",
         authors: "문선웅, 김영훈, 김주영, 박지홍, 김명준, 김건우",
         note: "포스터 발표",
-        url: "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12295313"
+        url: "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12295313",
     },
 
     {
@@ -173,7 +172,7 @@ export const publications = [
         date: "2024-11-22",
         authors: "박지홍, 류다니엘, 김주영, 차도훈, 장용환, 이은경, 김건우",
         note: "구두 발표 (우수논문상, 은상)",
-        url: "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12025198"
+        url: "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12025198",
     },
 
     {
@@ -184,7 +183,7 @@ export const publications = [
         date: "2024-11-22",
         authors: "이세연, 김주영, 박지홍, 김건우",
         note: "구두 발표 (우수논문상, 은상)",
-        url: "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12025198"
+        url: "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12025198",
     },
 
     {
@@ -195,7 +194,7 @@ export const publications = [
         date: "2024-11-22",
         authors: "김주영, 김건우",
         note: "구두 발표 (우수논문상, 동상)",
-        url: "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12025198"
+        url: "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12025198",
     },
 
     {
@@ -206,7 +205,7 @@ export const publications = [
         date: "2024-11-22",
         authors: "이규혁, 박수진, 박지홍, 김주영, 김건우",
         note: "구두 발표 (우수논문상, 동상)",
-        url: "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12025186"
+        url: "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12025186",
     },
 
     {
@@ -217,7 +216,7 @@ export const publications = [
         date: "2024-06-28",
         authors: "김주영, 박지홍, 차도훈, 문선웅, 김민기, 김건우",
         note: "포스터 발표 (우수논문상, 학부생부문 장려상) ",
-        url: "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE11862385"
+        url: "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE11862385",
     },
 
     {
@@ -228,6 +227,6 @@ export const publications = [
         date: "2023-11-01",
         authors: "김주영, 이기열, 손용숙, 김봉기, 김현주",
         note: "포스터 발표 (우수논문상, 동상)",
-        url: "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE11652097"
+        url: "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE11652097",
     },
 ];
