@@ -1,6 +1,7 @@
 // src/data/awards.js
 
 export const awards = [
+
     {
         id: "mobisec2025_2025-12-17",
         title: "The 9th International Conference on Mobile Internet Security (MobiSec 2025)",
@@ -8,10 +9,22 @@ export const awards = [
         date: "2025-12-17",
         description: "MobiSec 국제 학술대회 논문 발표",
         tags: ["학술대회"],
-
-        images: { count: 7 },
+        images: { count: 4 },
         downloads: [],
+
     },
+    {
+        id: "roboracer-autodrive-icra2024_2024-10-07",
+        title: "RoboRacer Sim Racing League @ IROS 2024 (2nd Place)",
+        org: "ROBORACER @ IROS 2024",
+        date: "2024-10-07",
+        description: "RoboRacer Autonomous Racing Simulation (AutoDRIVE Simulator) Competition 2nd Place",
+        tags: ["자율주행", "경진대회"],
+
+        images: { count: 4 },
+        downloads: ["certificate.pdf"],
+    },
+
 
     {
         id: "f1tenth-kc4_2025-11-6_1",
