@@ -64,6 +64,19 @@ export const publications = [
     // =========================
     // 국내 저널
     // =========================
+
+    {
+        id: "dom-journal-2025-12",
+        category: "국내 저널",
+        title: "머신러닝 기반 가중합산기법을 활용한 지역소멸 위기 대응 방안: 경남 지역 관광 역량 진단 및 축제 활성화 분석정",
+        venue: "한국정보기술학회논문지, 23권, 12호, pp. 21-37, 2025.",
+        date: "2025-12-01",
+        authors: "이세연, 박지홍, 김주영, 김건우",
+        note: "(KCI 등재지)",
+        url: "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12540420",
+    },
+
+
     {
         id: "dom-journal-2025-01-01",
         category: "국내 저널",
