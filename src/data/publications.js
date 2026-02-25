@@ -47,7 +47,7 @@ export const publications = [
         date: "2025-10-15",
         authors: "Ju-Young Kim, Ji-Hong Park and Gun-Woo Kim",
         note: "Main Track",
-        url: "https://d2j16w31g89z0j.cloudfront.net/site/ictc2026/abs/P04-3.pdf",
+        url: "https://ieeexplore.ieee.org/document/11387994",
     },
 
     {
