@@ -19,6 +19,17 @@ export const publications = [
     // =========================
 
     {
+        id: "int-conf-2026-04-04",
+        category: "국제 학회",
+        title: "임시",
+        venue: "The 49th International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR 2026)",
+        date: "2026-04-04",
+        authors: "Juyoung Kim, Ji-Hong Park, Sang-Min Choi and Gun-Woo Kim",
+        note: "Short Papers Track",
+        url: "",
+    },
+
+    {
         id: "int-conf-2025-12-17",
         category: "국제 학회",
         title: "Explainable Adversarial-Robust Vision-Language-Action Model for Robotic Manipulation",
@@ -75,7 +86,6 @@ export const publications = [
         note: "(KCI 등재지)",
         url: "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12540420",
     },
-
 
     {
         id: "dom-journal-2025-01-01",
