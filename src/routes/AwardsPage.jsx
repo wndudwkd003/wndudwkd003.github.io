@@ -5,6 +5,7 @@ import { Layout } from "../components/layout/Layout";
 import { awards } from "../data/awards";
 
 const DEFAULT_IMAGE_EXTS = ["jpg", "png", "jpeg", "webp", "gif"];
+const THUMBNAIL_DIR = "thumbnail";
 
 function formatDisplayDate(dateStr) {
   if (!dateStr) return "";
@@ -56,6 +57,7 @@ function normalizeAward(award) {
   const images = Array.from({ length: count }, (_, i) => ({
     type: "image",
     base: `${dir}/a${i + 1}`,
+    thumbnailBase: `${dir}/${THUMBNAIL_DIR}/a${i + 1}`,
     exts,
     label: `사진 ${i + 1}`,
   }));
@@ -72,28 +74,38 @@ function normalizeAward(award) {
   };
 }
 
-function SmartImage({ base, exts, alt, className, onClick }) {
+function SmartImage({ base, thumbnailBase, exts, alt, className, onClick }) {
   const [k, setK] = useState(0);
   const [dead, setDead] = useState(false);
+  const [useThumbnail, setUseThumbnail] = useState(Boolean(thumbnailBase));
 
   useEffect(() => {
     setK(0);
     setDead(false);
-  }, [base]);
+    setUseThumbnail(Boolean(thumbnailBase));
+  }, [base, thumbnailBase]);
 
   if (dead) {
     return <span className={className}>FILE</span>;
   }
 
-  const src = `${base}.${exts[k]}`;
+  const activeBase = useThumbnail && thumbnailBase ? thumbnailBase : base;
+  const src = `${activeBase}.${exts[k]}`;
+  const originalSrc = `${base}.${exts[k]}`;
 
   return (
     <img
       src={src}
       alt={alt}
       className={className}
-      onClick={onClick}
+      onClick={onClick ? (event) => onClick(event, originalSrc) : undefined}
       onError={() => {
+        if (useThumbnail && thumbnailBase) {
+          setUseThumbnail(false);
+          setK(0);
+          return;
+        }
+
         if (k < exts.length - 1) setK(k + 1);
         else setDead(true);
       }}
@@ -138,6 +150,7 @@ function AwardCard({ award, expanded, onToggle }) {
           {images.length > 0 ? (
             <SmartImage
               base={images[0].base}
+              thumbnailBase={images[0].thumbnailBase}
               exts={images[0].exts}
               alt={`${award.title} 썸네일`}
               className="award-thumb"
@@ -210,12 +223,13 @@ function AwardCard({ award, expanded, onToggle }) {
               <div className="award-slider-stage">
                 <SmartImage
                   base={images[idx].base}
+                  thumbnailBase={images[idx].thumbnailBase}
                   exts={images[idx].exts}
                   alt={`${award.title} 이미지 ${idx + 1}`}
                   className="award-slider-img"
-                  onClick={(e) => {
+                  onClick={(e, originalSrc) => {
                     e.stopPropagation();
-                    setLightboxUrl(e.currentTarget.src);
+                    setLightboxUrl(originalSrc);
                   }}
                 />
 
