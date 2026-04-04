@@ -74,42 +74,104 @@ function normalizeAward(award) {
   };
 }
 
-function SmartImage({ base, thumbnailBase, exts, alt, className, onClick }) {
-  const [k, setK] = useState(0);
+function SmartImage({
+  base,
+  thumbnailBase,
+  exts,
+  alt,
+  className,
+  wrapperClassName,
+  clickable = false,
+  onClick,
+}) {
   const [dead, setDead] = useState(false);
-  const [useThumbnail, setUseThumbnail] = useState(Boolean(thumbnailBase));
+  const [loaded, setLoaded] = useState(false);
+  const [resolvedSrc, setResolvedSrc] = useState(null);
 
   useEffect(() => {
-    setK(0);
     setDead(false);
-    setUseThumbnail(Boolean(thumbnailBase));
-  }, [base, thumbnailBase]);
+    setLoaded(false);
+    setResolvedSrc(null);
+
+    const buildCandidates = (targetBase) => {
+      if (!targetBase) return [];
+
+      const out = [];
+
+      for (const ext of exts) {
+        out.push(`${targetBase}.${ext}`);
+
+        const upper = ext.toUpperCase();
+        if (upper !== ext) out.push(`${targetBase}.${upper}`);
+      }
+
+      return [...new Set(out)];
+    };
+
+    const candidates = [
+      ...buildCandidates(thumbnailBase),
+      ...buildCandidates(base),
+    ];
+
+    let cancelled = false;
+
+    const tryLoad = async () => {
+      for (const candidate of candidates) {
+        const ok = await new Promise((resolve) => {
+          const image = new Image();
+          image.onload = () => resolve(true);
+          image.onerror = () => resolve(false);
+          image.src = candidate;
+        });
+
+        if (!ok || cancelled) continue;
+
+        setResolvedSrc(candidate);
+        setLoaded(true);
+        return;
+      }
+
+      if (!cancelled) setDead(true);
+    };
+
+    tryLoad();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [base, thumbnailBase, exts]);
 
   if (dead) {
-    return <span className={className}>FILE</span>;
+    return (
+      <div
+        className={`award-image-shell ${wrapperClassName || ""} ${
+          clickable ? "is-clickable" : "is-static"
+        }`.trim()}
+      >
+        <span className="award-image-placeholder">FILE</span>
+      </div>
+    );
   }
 
-  const activeBase = useThumbnail && thumbnailBase ? thumbnailBase : base;
-  const src = `${activeBase}.${exts[k]}`;
-  const originalSrc = `${base}.${exts[k]}`;
-
   return (
-    <img
-      src={src}
-      alt={alt}
-      className={className}
-      onClick={onClick ? (event) => onClick(event, originalSrc) : undefined}
-      onError={() => {
-        if (useThumbnail && thumbnailBase) {
-          setUseThumbnail(false);
-          setK(0);
-          return;
-        }
+    <div
+      className={`award-image-shell ${wrapperClassName || ""} ${
+        clickable ? "is-clickable" : "is-static"
+      }`.trim()}
+    >
+      {!loaded && <span className="award-image-spinner" aria-hidden="true" />}
 
-        if (k < exts.length - 1) setK(k + 1);
-        else setDead(true);
-      }}
-    />
+      <img
+        src={resolvedSrc ?? ""}
+        alt={alt}
+        className={`${className} ${loaded ? "is-loaded" : "is-loading"}`}
+        onClick={
+          clickable && onClick
+            ? (event) => onClick(event, resolvedSrc)
+            : undefined
+        }
+      />
+    </div>
   );
 }
 
@@ -152,6 +214,7 @@ function AwardCard({ award, expanded, onToggle }) {
               base={images[0].base}
               thumbnailBase={images[0].thumbnailBase}
               exts={images[0].exts}
+              wrapperClassName="award-thumb-media"
               alt={`${award.title} 썸네일`}
               className="award-thumb"
             />
@@ -223,8 +286,9 @@ function AwardCard({ award, expanded, onToggle }) {
               <div className="award-slider-stage">
                 <SmartImage
                   base={images[idx].base}
-                  thumbnailBase={images[idx].thumbnailBase}
                   exts={images[idx].exts}
+                  wrapperClassName="award-slider-media"
+                  clickable
                   alt={`${award.title} 이미지 ${idx + 1}`}
                   className="award-slider-img"
                   onClick={(e, originalSrc) => {
@@ -238,7 +302,10 @@ function AwardCard({ award, expanded, onToggle }) {
                     <button
                       type="button"
                       className="award-slider-btn"
-                      onClick={goPrev}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        goPrev();
+                      }}
                       disabled={idx === 0}
                       aria-label="이전 이미지"
                     >
@@ -247,7 +314,10 @@ function AwardCard({ award, expanded, onToggle }) {
                     <button
                       type="button"
                       className="award-slider-btn"
-                      onClick={goNext}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        goNext();
+                      }}
                       disabled={idx === images.length - 1}
                       aria-label="다음 이미지"
                     >
@@ -264,7 +334,10 @@ function AwardCard({ award, expanded, onToggle }) {
                       key={`${award.id}-dot-${i}`}
                       type="button"
                       className={`award-dot ${i === idx ? "is-active" : ""}`}
-                      onClick={() => setIdx(i)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setIdx(i);
+                      }}
                       aria-label={`${i + 1}번 이미지 보기`}
                     />
                   ))}
