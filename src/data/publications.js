@@ -21,7 +21,7 @@ export const publications = [
     {
         id: "int-conf-2026-04-04",
         category: "국제 학회",
-        title: "임시",
+        title: "REMICA: Reflective Memory and Interventional Context Alignment with Multi-Agent LLMs for Inappropriate Utterance Detection",
         venue: "The 49th International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR 2026)",
         date: "2026-04-04",
         authors: "Juyoung Kim, Ji-Hong Park, Sang-Min Choi and Gun-Woo Kim",
