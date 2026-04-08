@@ -1,4 +1,3 @@
-// src/components/layout/Layout.jsx
 import { Link, useLocation } from "react-router-dom";
 import { siteConfig } from "../../config/siteConfig";
 import profileImg from "../../assets/profile.gif";
@@ -16,6 +15,7 @@ export function Layout({ children }) {
                             <span className="app-logo-mark">KJY</span>
                             <span className="app-logo-text">Portfolio</span>
                         </div>
+
                         <div className="app-profile">
                             <img src={profileImg} alt="Profile" className="app-profile-image" />
 
@@ -28,8 +28,6 @@ export function Layout({ children }) {
                                     Gyeongsang National University
                                 </a>
                             </div>
-
-                            <div className="app-profile-message">GPT 찬양해</div>
                         </div>
                     </div>
 
@@ -46,9 +44,8 @@ export function Layout({ children }) {
                     </nav>
 
                     <footer className="app-sidebar-footer">
-                        {/* Contact 영역 */}
                         <div className="app-sidebar-footer-contact">
-                            Contact 📩
+                            Contact
                             <a href="mailto:your_email@example.com" className="app-sidebar-footer-link">
                                 ymail3@naver.com
                             </a>
@@ -57,11 +54,10 @@ export function Layout({ children }) {
                             </a>
                         </div>
 
-                        {/* 저작권 + Assisted by */}
                         <span className="app-sidebar-footer-text">
                             © {new Date().getFullYear()} Juyoung Kim
                             <br />
-                            Assisted by ChatGPT. 진짜 최고 😗😆
+                            Assisted by ChatGPT.
                         </span>
                     </footer>
                 </aside>

@@ -84,15 +84,7 @@ function SmartImage({
   clickable = false,
   onClick,
 }) {
-  const [dead, setDead] = useState(false);
-  const [loaded, setLoaded] = useState(false);
-  const [resolvedSrc, setResolvedSrc] = useState(null);
-
-  useEffect(() => {
-    setDead(false);
-    setLoaded(false);
-    setResolvedSrc(null);
-
+  const candidates = useMemo(() => {
     const buildCandidates = (targetBase) => {
       if (!targetBase) return [];
 
@@ -105,41 +97,23 @@ function SmartImage({
         if (upper !== ext) out.push(`${targetBase}.${upper}`);
       }
 
-      return [...new Set(out)];
+      return out;
     };
 
-    const candidates = [
-      ...buildCandidates(thumbnailBase),
-      ...buildCandidates(base),
-    ];
-
-    let cancelled = false;
-
-    const tryLoad = async () => {
-      for (const candidate of candidates) {
-        const ok = await new Promise((resolve) => {
-          const image = new Image();
-          image.onload = () => resolve(true);
-          image.onerror = () => resolve(false);
-          image.src = candidate;
-        });
-
-        if (!ok || cancelled) continue;
-
-        setResolvedSrc(candidate);
-        setLoaded(true);
-        return;
-      }
-
-      if (!cancelled) setDead(true);
-    };
-
-    tryLoad();
-
-    return () => {
-      cancelled = true;
-    };
+    return [...new Set([...buildCandidates(thumbnailBase), ...buildCandidates(base)])];
   }, [base, thumbnailBase, exts]);
+
+  const [candidateIndex, setCandidateIndex] = useState(0);
+  const [dead, setDead] = useState(false);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    setCandidateIndex(0);
+    setDead(candidates.length === 0);
+    setLoaded(false);
+  }, [candidates]);
+
+  const currentSrc = candidates[candidateIndex] ?? "";
 
   if (dead) {
     return (
@@ -162,14 +136,25 @@ function SmartImage({
       {!loaded && <span className="award-image-spinner" aria-hidden="true" />}
 
       <img
-        src={resolvedSrc ?? ""}
+        src={currentSrc}
         alt={alt}
         className={`${className} ${loaded ? "is-loaded" : "is-loading"}`}
+        onLoad={() => setLoaded(true)}
         onClick={
           clickable && onClick
-            ? (event) => onClick(event, resolvedSrc)
+            ? (event) => onClick(event, currentSrc)
             : undefined
         }
+        onError={() => {
+          setLoaded(false);
+
+          if (candidateIndex < candidates.length - 1) {
+            setCandidateIndex((value) => value + 1);
+            return;
+          }
+
+          setDead(true);
+        }}
       />
     </div>
   );
