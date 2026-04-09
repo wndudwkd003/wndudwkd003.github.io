@@ -949,6 +949,10 @@
     gap: 6px;
 }
 
+.other-panel-music {
+    gap: 10px;
+}
+
 .other-panel-title {
     margin: 0;
     font-size: 1.16rem;
@@ -973,6 +977,68 @@
 
 .other-contact-link {
     color: var(--ink);
+}
+
+.other-music-list {
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
+    display: grid;
+    gap: 12px;
+}
+
+.other-music-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.other-music-copy {
+    display: grid;
+    gap: 2px;
+}
+
+.other-music-title,
+.other-music-artist,
+.other-music-empty {
+    margin: 0;
+}
+
+.other-music-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.other-music-artist,
+.other-music-empty {
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: var(--muted);
+}
+
+.other-music-link {
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    color: #111111;
+    text-decoration: none;
+    transition: transform 160ms ease;
+}
+
+.other-music-link:hover {
+    color: #111111;
+    transform: scale(1.08);
+}
+
+.other-music-link-icon {
+    width: 16px;
+    height: 16px;
+    display: block;
 }
 
 .other-timeline {

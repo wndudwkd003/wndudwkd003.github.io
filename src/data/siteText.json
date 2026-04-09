@@ -126,6 +126,27 @@
                 { "label": "Academic", "value": "wndudwkd003@gnu.ac.kr", "href": "mailto:wndudwkd003@gnu.ac.kr" },
                 { "label": "Location", "value": "Jinju, Republic of Korea" }
             ]
+        },
+        "music": {
+            "title": "Song Picks",
+            "emptyCopy": "Add your favorite songs and YouTube links in siteText.json.",
+            "items": [
+                {
+                    "title": "라라라",
+                    "artist": "SG워너비",
+                    "url": "https://youtu.be/hPoRgIzXm5o?si=TbL3okwUK0VlZqW6"
+                },
+                {
+                    "title": "海辺の電話ボックス",
+                    "artist": "MIMI",
+                    "url": "https://youtu.be/tHo25oDiNNY?si=A-zmkcbaYPwFXzRb"
+                },
+                {
+                    "title": "Counting Stars",
+                    "artist": "OneRepublic",
+                    "url": "https://youtu.be/hT_nvWreIhg?si=mYoVEaO_i5vf8jO_"
+                }
+            ]
         }
     }
 }

@@ -7,6 +7,7 @@ import siteText from "../data/siteText.json";
 
 const DEFAULT_IMAGE_EXTS = ["jpg", "png", "jpeg", "webp", "gif"];
 const THUMBNAIL_DIR = "thumbnail";
+const resolvedImageCache = new Map();
 
 function formatDisplayDate(dateStr) {
   if (!dateStr) return "";
@@ -103,16 +104,27 @@ function SmartImage({
 
     return [...new Set([...buildCandidates(thumbnailBase), ...buildCandidates(base)])];
   }, [base, thumbnailBase, exts]);
+  const cacheKey = useMemo(() => candidates.join("|"), [candidates]);
 
   const [candidateIndex, setCandidateIndex] = useState(0);
   const [dead, setDead] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
+    const cachedSrc = resolvedImageCache.get(cacheKey);
+    const cachedIndex = cachedSrc ? candidates.indexOf(cachedSrc) : -1;
+
+    if (cachedIndex >= 0) {
+      setCandidateIndex(cachedIndex);
+      setDead(false);
+      setLoaded(true);
+      return;
+    }
+
     setCandidateIndex(0);
     setDead(candidates.length === 0);
     setLoaded(false);
-  }, [candidates]);
+  }, [cacheKey, candidates]);
 
   const currentSrc = candidates[candidateIndex] ?? "";
 
@@ -140,7 +152,10 @@ function SmartImage({
         src={currentSrc}
         alt={alt}
         className={`${className} ${loaded ? "is-loaded" : "is-loading"}`}
-        onLoad={() => setLoaded(true)}
+        onLoad={() => {
+          resolvedImageCache.set(cacheKey, currentSrc);
+          setLoaded(true);
+        }}
         onClick={
           clickable && onClick
             ? (event) => onClick(event, currentSrc)

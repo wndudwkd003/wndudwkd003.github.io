@@ -38,7 +38,7 @@ export function OtherPage() {
                     </div>
 
                     <div className="other-column">
-                        <section className="other-panel other-panel-contact">
+                        <section className="other-panel">
                             <h3 className="other-panel-title">{siteText.other.interests.title}</h3>
                             <div className="other-chip-row">
                                 {siteText.other.interests.items.map((item) => (
@@ -49,7 +49,7 @@ export function OtherPage() {
                             </div>
                         </section>
 
-                        <section className="other-panel">
+                        <section className="other-panel other-panel-contact">
                             <h3 className="other-panel-title">{siteText.other.contact.title}</h3>
                             <ul className="other-facts">
                                 {siteText.other.contact.items.map((item) => (
@@ -65,6 +65,58 @@ export function OtherPage() {
                                     </li>
                                 ))}
                             </ul>
+                        </section>
+
+                        <section className="other-panel other-panel-music">
+                            <h3 className="other-panel-title">{siteText.other.music.title}</h3>
+                            {siteText.other.music.items.length > 0 ? (
+                                <ul className="other-music-list">
+                                    {siteText.other.music.items.map((item) => (
+                                        <li key={`${item.title}-${item.artist}`} className="other-music-item">
+                                            <div className="other-music-copy">
+                                                <p className="other-music-title">{item.title}</p>
+                                                {item.artist ? (
+                                                    <p className="other-music-artist">{item.artist}</p>
+                                                ) : null}
+                                            </div>
+                                            {item.url ? (
+                                                <a
+                                                    href={item.url}
+                                                    target="_blank"
+                                                    rel="noreferrer"
+                                                    className="other-music-link"
+                                                    aria-label={`${item.title} link`}
+                                                >
+                                                    <svg
+                                                        viewBox="0 0 24 24"
+                                                        className="other-music-link-icon"
+                                                        aria-hidden="true"
+                                                    >
+                                                        <path
+                                                            d="M9 7h8v8"
+                                                            fill="none"
+                                                            stroke="currentColor"
+                                                            strokeWidth="1.8"
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                        />
+                                                        <path
+                                                            d="M15.5 8.5 8 16"
+                                                            fill="none"
+                                                            stroke="currentColor"
+                                                            strokeWidth="1.8"
+                                                            strokeLinecap="round"
+                                                            strokeLinejoin="round"
+                                                        />
+                                                    </svg>
+                                                </a>
+                                            ) : null}
+                                        </li>
+                                    ))}
+                                </ul>
+                            ) : (
+                                <p className="other-music-empty">{siteText.other.music.emptyCopy}</p>
+                            )}
                         </section>
                     </div>
                 </div>
