@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "prebuild": "node scripts/generate-thumbnails.mjs",
+    "generate-thumbnails": "python python-scripts/generate_thumbnails.py",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
