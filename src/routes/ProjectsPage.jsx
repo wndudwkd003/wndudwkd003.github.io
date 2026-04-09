@@ -1,17 +1,25 @@
 import { Layout } from "../components/layout/Layout";
 import { projects } from "../data/projects";
 import { ProjectCard } from "../components/portfolio/ProjectCard";
+import siteText from "../data/siteText.json";
 
 export function ProjectsPage() {
-  return (
-    <Layout>
-      <h2 className="text-2xl font-semibold mb-4">Projects</h2>
-      <p className="text-sm text-gray-600 mb-4">
-        진행했던 연구 및 프로젝트를 정리한 페이지입니다.
-      </p>
-      {projects.map((p) => (
-        <ProjectCard key={p.id} project={p} />
-      ))}
-    </Layout>
-  );
+    return (
+        <Layout>
+            <div className="page-stack">
+                <header className="page-header">
+                    <h2 className="page-title">{siteText.projects.title}</h2>
+                    <p className="page-description">
+                        {siteText.projects.description}
+                    </p>
+                </header>
+
+                <div className="project-list">
+                    {projects.map((project, index) => (
+                        <ProjectCard key={`${project.id}-${index}`} project={project} index={index} />
+                    ))}
+                </div>
+            </div>
+        </Layout>
+    );
 }

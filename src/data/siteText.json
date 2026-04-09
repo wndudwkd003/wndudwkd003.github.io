@@ -1,0 +1,131 @@
+{
+    "layout": {
+        "brandTitle": "Juyoung Kim",
+        "brandSubtitle": "Portfolio",
+        "navItems": [
+            { "path": "/", "label": "Home" },
+            { "path": "/publications", "label": "Publications" },
+            { "path": "/projects", "label": "Projects" },
+            { "path": "/awards", "label": "Activities" },
+            { "path": "/other", "label": "Other" }
+        ]
+    },
+    "home": {
+        "title": "About Me.",
+        "leadLines": [
+            "Hi! I am Juyoung Kim, a master's student in the Department of Computer Science & Engineering at Gyeongsang National University.",
+            "My research spans robotics, sensor fusion, multi-agent systems, LLMs, synthetic data generation, and missing data."
+        ],
+        "photo": {
+            "imagePath": "public\\52495773.png",
+            "label": "Photo area",
+            "copy": "A portrait, lab photo, or research-related image can live here later."
+        },
+        "profile": {
+            "label": "Profile",
+            "name": "Juyoung Kim",
+            "roleLines": ["M.S. Student", "Department of Computer Science & Engineering"],
+            "universityLabel": "Gyeongsang National University",
+            "locationLabel": "Jinju, Republic of Korea"
+        },
+        "stats": [
+            { "key": "publications", "label": "Publications" },
+            { "key": "projects", "label": "Projects" },
+            { "key": "activities", "label": "Activities" }
+        ],
+        "focus": {
+            "label": "Research Interests",
+            "tags": ["#Robotics", "#LLMs", "#ComputerVision", "#AI"]
+        },
+        "recentPublication": {
+            "label": "Recent publication",
+            "fallbackTitle": "Recent publication will appear here.",
+            "fallbackCopy": "Journal papers and conference publications are organized here in a concise timeline.",
+            "linkLabel": "Publications"
+        },
+        "recentActivity": {
+            "label": "Recent activity",
+            "fallbackTitle": "Recent activity will appear here.",
+            "fallbackCopy": "Awards, talks, competitions, and academic activities are collected in one place.",
+            "linkLabel": "Activities"
+        }
+    },
+    "projects": {
+        "title": "Projects",
+        "description": "A curated list of projects, prototypes, and implementation notes, arranged in a cleaner reading flow."
+    },
+    "publications": {
+        "title": "Publications",
+        "description": "A concise archive of journal papers, conference publications, and presentation records."
+    },
+    "awards": {
+        "title": "Activities & Awards",
+        "description": "A chronological archive of activities, awards, conference appearances, and selected records."
+    },
+    "other": {
+        "title": "Other",
+        "description": "A short profile page with personal context, contact details, interests, and a simple timeline.",
+        "about": {
+            "title": "About",
+            "notes": ["I like Pepsi Zero Sugar.", "If you have any questions or would like to connect, feel free to reach out by email anytime :)"]
+        },
+        "interests": {
+            "title": "Interests",
+            "items": [
+                "Computer Vision",
+                "Autonomous Driving",
+                "LiDAR-Camera Calibration",
+                "Multi-Agent Systems",
+                "Large Language Models",
+                "Synthetic Data Generation",
+                "Missing Data Imputation",
+                "Vision-Language-Action Models"
+            ]
+        },
+        "timeline": {
+            "title": "Timeline",
+            "entries": [
+                {
+                    "period": "2025.03 - Present",
+                    "title": "M.S. Program",
+                    "description": "M.S. student in the Department of Computer Science & Engineering"
+                },
+                {
+                    "period": "2025.03 - Present",
+                    "title": "IDEALAB Full-Time Researcher",
+                    "description": ""
+                },
+
+                {
+                    "period": "2024.01 - 2025.02",
+                    "title": "IDEALAB Undergraduate Intern",
+                    "description": ""
+                },
+                {
+                    "period": "2023.01 - 2024.12",
+                    "title": "ICARUS Club, Gyeongsang National University",
+                    "description": "Served as the club's Vice President until the end of 2023."
+                },
+                {
+                    "period": "2022.11 - 2023.12",
+                    "title": "IRLAB Undergraduate Intern",
+                    "description": ""
+                },
+
+                {
+                    "period": "2019.03 - 2025.02",
+                    "title": "Undergraduate Program",
+                    "description": "B.S. in Computer Software Engineering and B.S. in Smart Manufacturing ICT (USG Convergence Major)"
+                }
+            ]
+        },
+        "contact": {
+            "title": "Contact",
+            "items": [
+                { "label": "Personal", "value": "ymail3@naver.com", "href": "mailto:ymail3@naver.com" },
+                { "label": "Academic", "value": "wndudwkd003@gnu.ac.kr", "href": "mailto:wndudwkd003@gnu.ac.kr" },
+                { "label": "Location", "value": "Jinju, Republic of Korea" }
+            ]
+        }
+    }
+}

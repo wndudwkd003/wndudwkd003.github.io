@@ -1,8 +1,9 @@
-// src/routes/AwardsPage.jsx
+﻿// src/routes/AwardsPage.jsx
 import React, { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { Layout } from "../components/layout/Layout";
 import { awards } from "../data/awards";
+import siteText from "../data/siteText.json";
 
 const DEFAULT_IMAGE_EXTS = ["jpg", "png", "jpeg", "webp", "gif"];
 const THUMBNAIL_DIR = "thumbnail";
@@ -294,7 +295,20 @@ function AwardCard({ award, expanded, onToggle }) {
                       disabled={idx === 0}
                       aria-label="이전 이미지"
                     >
-                      ‹
+                      <svg
+                        viewBox="0 0 24 24"
+                        className="award-slider-btn-icon"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="M14.5 5.5 8 12l6.5 6.5"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
                     </button>
                     <button
                       type="button"
@@ -306,7 +320,20 @@ function AwardCard({ award, expanded, onToggle }) {
                       disabled={idx === images.length - 1}
                       aria-label="다음 이미지"
                     >
-                      ›
+                      <svg
+                        viewBox="0 0 24 24"
+                        className="award-slider-btn-icon"
+                        aria-hidden="true"
+                      >
+                        <path
+                          d="m9.5 5.5 6.5 6.5-6.5 6.5"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="2.2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
                     </button>
                   </div>
                 )}
@@ -421,9 +448,9 @@ export function AwardsPage() {
   return (
     <Layout>
       <header className="awards-header">
-        <h2 className="awards-title">Activities & Awards</h2>
+        <h2 className="awards-title">{siteText.awards.title}</h2>
         <p className="awards-description">
-          교내외 활동 및 대회 수상, 성적 정리
+          {siteText.awards.description}
         </p>
       </header>
 
@@ -450,3 +477,4 @@ export function AwardsPage() {
     </Layout>
   );
 }
+
