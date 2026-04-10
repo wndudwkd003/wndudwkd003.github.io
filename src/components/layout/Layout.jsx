@@ -39,23 +39,34 @@ export function Layout({ children }) {
                         </div>
                     </Link>
 
-                    <nav className="app-nav" aria-label="Primary">
-                        {visibleNavItems.map((item, index) => {
-                            const isActive = item.path === "/" ? location.pathname === "/" : location.pathname.startsWith(item.path);
+                    <div className="app-header-actions">
+                        <nav className="app-nav" aria-label="Primary">
+                            {visibleNavItems.map((item, index) => {
+                                const isActive = item.path === "/" ? location.pathname === "/" : location.pathname.startsWith(item.path);
 
-                            return (
-                                <Link
-                                    key={item.path}
-                                    to={item.path}
-                                    className={`app-nav-link${isActive ? " is-active" : ""}`}
-                                    onClick={item.path === "/" ? scrollToTop : undefined}
-                                >
-                                    <span className="app-nav-index">{String(index + 1).padStart(2, "0")}</span>
-                                    <span>{item.label}</span>
-                                </Link>
-                            );
-                        })}
-                    </nav>
+                                return (
+                                    <Link
+                                        key={item.path}
+                                        to={item.path}
+                                        className={`app-nav-link${isActive ? " is-active" : ""}`}
+                                        onClick={item.path === "/" ? scrollToTop : undefined}
+                                    >
+                                        <span className="app-nav-index">{String(index + 1).padStart(2, "0")}</span>
+                                        <span>{item.label}</span>
+                                    </Link>
+                                );
+                            })}
+                        </nav>
+
+                        <a
+                            href={siteText.layout.githubLink.url}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="app-header-external-link"
+                        >
+                            {siteText.layout.githubLink.label}
+                        </a>
+                    </div>
                 </header>
 
                 <main className="app-main">{children}</main>

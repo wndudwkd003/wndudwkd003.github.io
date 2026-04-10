@@ -1,5 +1,6 @@
 import { ResearchVariantCommandCenter } from "./ResearchVariantCommandCenter";
 import { ResearchVariantEditorial } from "./ResearchVariantEditorial";
+import { ResearchStoryBridge } from "./ResearchStoryBridge";
 import { ResearchVariantTimeline } from "./ResearchVariantTimeline";
 import { useRevealOnScroll } from "./useRevealOnScroll";
 
@@ -7,6 +8,7 @@ const VARIANT_COMPONENTS = {
     timeline: ResearchVariantTimeline,
     "command-center": ResearchVariantCommandCenter,
     editorial: ResearchVariantEditorial,
+    story: ResearchStoryBridge,
 };
 
 function normalizePublicAsset(path) {
@@ -27,7 +29,8 @@ function normalizePublicAsset(path) {
 }
 
 export function ResearchSectionRenderer({ item }) {
-    const Component = VARIANT_COMPONENTS[item.variant] || ResearchVariantEditorial;
+    const componentKey = item.type === "story" ? "story" : item.variant;
+    const Component = VARIANT_COMPONENTS[componentKey] || ResearchVariantEditorial;
     const { ref, isVisible } = useRevealOnScroll({
         threshold: 0.16,
         rootMargin: "0px 0px -8% 0px",

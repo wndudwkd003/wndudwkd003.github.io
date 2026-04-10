@@ -196,13 +196,8 @@ export const publications = [
         authors: "박지홍, 류다니엘, 김주영, 차도훈, 장용환, 이은경, 김건우",
         note: "구두 발표 (우수논문상, 은상)",
         details: {
-            overview:
-                "This study presents a personalized clothing recommendation system that combines YOLOv5-based garment recognition with K-prototype clustering to reflect both weather conditions and user preferences. It explores how visual item detection and mixed-type clustering can support more context-aware outfit recommendations.",
-            contributions: [
-                "Designed the overall recommendation pipeline by combining clothing detection and clustering-based preference grouping.",
-                "Implemented the YOLOv5-based garment recognition workflow and organized the preprocessing pipeline for visual inputs.",
-                "Analyzed how weather information and user-specific clothing patterns could be reflected in recommendation results.",
-            ],
+            overview: "-",
+            contributions: ["-", "-", "-"],
             materials: [],
         },
         url: "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12025198",

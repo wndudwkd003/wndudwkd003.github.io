@@ -34,10 +34,12 @@ export function HomePage() {
     const latestPublication = getLatestByDate(publications);
     const latestAward = getLatestByDate(awards);
     const photoSrc = normalizePhotoSrc(siteText.home.photo.imagePath);
-    const visibleStats = siteText.home.stats.filter((item) => item.key !== "projects");
+    const certificateCount = Array.isArray(siteText.other.certificates?.items) ? siteText.other.certificates.items.length : 0;
+    const visibleStats = siteText.home.stats.filter((item) => item.hidden !== true);
     const statValueMap = {
         publications: publications.length,
         projects: projects.length,
+        certificates: certificateCount,
         activities: awards.length,
     };
     const scrollToResearchShowcase = () => {
@@ -101,7 +103,7 @@ export function HomePage() {
                             </p>
                         </div>
 
-                        <div className="home-stat-grid">
+                        <div className="home-stat-grid" style={{ "--home-stat-count": visibleStats.length }}>
                             {visibleStats.map((item) => (
                                 <div key={item.key} className="home-stat-card">
                                     <span className="home-stat-value">{statValueMap[item.key]}</span>

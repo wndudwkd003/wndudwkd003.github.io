@@ -13,7 +13,33 @@
 
 .research-fallback-copy {
     margin: 0;
-    color: rgba(255, 255, 255, 0.72);
+    color: rgba(255, 255, 255, 0.86);
+}
+
+.research-story-bridge {
+    display: grid;
+    gap: 10px;
+    max-width: 720px;
+    margin: -8px auto;
+    padding: 6px 18px;
+    text-align: center;
+}
+
+.research-story-bridge-eyebrow {
+    margin: 0;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.68);
+}
+
+.research-story-bridge-copy {
+    margin: 0;
+    color: rgba(255, 255, 255, 0.94);
+    font-size: clamp(1rem, 1.5vw, 1.15rem);
+    line-height: 1.9;
+    letter-spacing: -0.01em;
 }
 
 .research-section {
@@ -22,9 +48,7 @@
     padding: 30px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 30px;
-    background:
-        radial-gradient(circle at top right, rgba(97, 124, 255, 0.14), transparent 26%),
-        linear-gradient(180deg, rgba(255, 255, 255, 0.045) 0%, rgba(255, 255, 255, 0.02) 100%);
+    background: rgba(255, 255, 255, 0.035);
     box-shadow: 0 28px 68px rgba(0, 0, 0, 0.22);
     backdrop-filter: blur(14px);
 }
@@ -40,7 +64,7 @@
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.58);
+    color: rgba(255, 255, 255, 0.78);
 }
 
 .research-section-title {
@@ -56,7 +80,7 @@
     max-width: 68ch;
     font-size: 1rem;
     line-height: 1.8;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.92);
 }
 
 .research-section-tags,
@@ -73,7 +97,7 @@
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 999px;
     background: rgba(255, 255, 255, 0.05);
-    color: rgba(255, 255, 255, 0.78);
+    color: rgba(255, 255, 255, 0.9);
     font-size: 0.82rem;
 }
 
@@ -125,7 +149,7 @@
 .research-timeline-image-fallback {
     display: grid;
     place-items: center;
-    color: rgba(255, 255, 255, 0.54);
+    color: rgba(255, 255, 255, 0.8);
     font-size: 0.84rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -153,7 +177,7 @@
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.52);
+    color: rgba(255, 255, 255, 0.78);
 }
 
 .research-timeline-metric-value,
@@ -187,7 +211,7 @@
     justify-content: center;
     font-size: 0.82rem;
     font-weight: 700;
-    color: rgba(255, 255, 255, 0.48);
+    color: rgba(255, 255, 255, 0.72);
 }
 
 .research-timeline-step-copy {
@@ -209,7 +233,7 @@
 .research-command-agent-role,
 .research-editorial-callout-copy {
     margin: 0;
-    color: rgba(255, 255, 255, 0.72);
+    color: rgba(255, 255, 255, 0.88);
     font-size: 0.96rem;
     line-height: 1.8;
 }
@@ -227,7 +251,7 @@
     padding: 18px;
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 24px;
-    background: linear-gradient(180deg, rgba(16, 18, 27, 0.88) 0%, rgba(10, 12, 18, 0.92) 100%);
+    background: rgba(10, 12, 18, 0.92);
 }
 
 .research-command-panels {
@@ -259,7 +283,7 @@
     padding: 12px 14px;
     border-radius: 16px;
     background: rgba(255, 255, 255, 0.035);
-    color: rgba(255, 255, 255, 0.76);
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .research-command-message-dot {
@@ -288,7 +312,7 @@
     padding: 5px 10px;
     border-radius: 999px;
     background: rgba(127, 156, 255, 0.12);
-    color: #c9d4ff;
+    color: #f4f7ff;
     font-size: 0.75rem;
     font-weight: 700;
 }
@@ -312,9 +336,7 @@
     padding: 18px;
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 22px;
-    background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015)),
-        radial-gradient(circle at top right, rgba(127, 156, 255, 0.12), transparent 30%);
+    background: rgba(255, 255, 255, 0.03);
 }
 
 .research-editorial-callouts {
@@ -348,6 +370,11 @@
     .home-research-list {
         gap: 40px;
         margin-top: 18px;
+    }
+
+    .research-story-bridge {
+        margin: -2px auto;
+        padding: 0 6px;
     }
 
     .research-section {

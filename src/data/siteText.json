@@ -2,6 +2,10 @@
     "layout": {
         "brandTitle": "Juyoung Kim",
         "brandSubtitle": "Portfolio",
+        "githubLink": {
+            "label": "Go to GitHub",
+            "url": "https://github.com/wndudwkd003"
+        },
         "navItems": [
             { "path": "/", "label": "Home" },
             { "path": "/publications", "label": "Publications" },
@@ -30,8 +34,9 @@
         },
         "stats": [
             { "key": "publications", "label": "Publications" },
-            { "key": "projects", "label": "Projects" },
-            { "key": "activities", "label": "Activities" }
+            { "key": "activities", "label": "Activities" },
+            { "key": "projects", "label": "Projects", "hidden": true },
+            { "key": "certificates", "label": "Certificates" }
         ],
         "focus": {
             "label": "Research Interests",
@@ -48,7 +53,33 @@
             "fallbackTitle": "Recent activity will appear here.",
             "fallbackCopy": "Awards, talks, competitions, and academic activities are collected in one place.",
             "linkLabel": "Activities"
-        }
+        },
+        "researchStoryBridges": [
+            {
+                "id": "story-bridge-00",
+                "beforeItemId": "autonomous-driving-sensor-fusion",
+                "eyebrow": "Research Narrative",
+                "copy": "The story begins with sensing the world as faithfully as possible, because every later decision depends on how well uncertainty is first understood."
+            },
+            {
+                "id": "story-bridge-01",
+                "afterItemId": "autonomous-driving-sensor-fusion",
+                "eyebrow": "Research Flow",
+                "copy": "I start from physical-world uncertainty, then move toward coordination and decision-making where multiple models or agents have to work together."
+            },
+            {
+                "id": "story-bridge-02",
+                "afterItemId": "llm-multiagent-systems",
+                "eyebrow": "Next Question",
+                "copy": "From there, the focus shifts to the quality of the data itself, asking how missing or synthetic signals reshape what an intelligent system can actually learn."
+            },
+            {
+                "id": "story-bridge-03",
+                "afterItemId": "missing-data-synthetic-data",
+                "eyebrow": "Looking Ahead",
+                "copy": "Taken together, these topics build one larger narrative: designing AI systems that stay reliable even when the world is noisy, incomplete, and constantly changing."
+            }
+        ]
     },
     "projects": {
         "title": "Projects",
@@ -136,6 +167,42 @@
                 { "label": "Personal", "value": "ymail3@naver.com", "href": "mailto:ymail3@naver.com" },
                 { "label": "Academic", "value": "wndudwkd003@gnu.ac.kr", "href": "mailto:wndudwkd003@gnu.ac.kr" },
                 { "label": "Location", "value": "Jinju, Republic of Korea" }
+            ]
+        },
+        "certificates": {
+            "title": "Certificates",
+            "emptyCopy": "Add certificate records in siteText.json.",
+            "items": [
+                {
+                    "id": "t5",
+                    "title": "토익스피킹 IM2",
+                    "date": "2026",
+                    "easterEgg": "3일"
+                },
+                {
+                    "id": "t4",
+                    "title": "토익 580",
+                    "date": "2026",
+                    "easterEgg": "목표는 700"
+                },
+                {
+                    "id": "t3",
+                    "title": "정보처리기사",
+                    "date": "2024",
+                    "easterEgg": ""
+                },
+                {
+                    "id": "t2",
+                    "title": "전산회계 2급",
+                    "date": "2022",
+                    "easterEgg": "군대 전역하고... 심심해서..."
+                },
+                {
+                    "id": "t1",
+                    "title": "정보처리기능사",
+                    "date": "2016",
+                    "easterEgg": ""
+                }
             ]
         },
         "music": {
