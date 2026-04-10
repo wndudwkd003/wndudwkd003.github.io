@@ -34,6 +34,7 @@ export function HomePage() {
     const latestPublication = getLatestByDate(publications);
     const latestAward = getLatestByDate(awards);
     const photoSrc = normalizePhotoSrc(siteText.home.photo.imagePath);
+    const visibleStats = siteText.home.stats.filter((item) => item.key !== "projects");
     const statValueMap = {
         publications: publications.length,
         projects: projects.length,
@@ -101,7 +102,7 @@ export function HomePage() {
                         </div>
 
                         <div className="home-stat-grid">
-                            {siteText.home.stats.map((item) => (
+                            {visibleStats.map((item) => (
                                 <div key={item.key} className="home-stat-card">
                                     <span className="home-stat-value">{statValueMap[item.key]}</span>
                                     <span className="home-stat-label">{item.label}</span>

@@ -7,6 +7,7 @@ import "./Layout.css";
 export function Layout({ children }) {
     const location = useLocation();
     const [showScrollTop, setShowScrollTop] = useState(false);
+    const visibleNavItems = siteConfig.navItems.filter((item) => item.path !== "/projects");
 
     useEffect(() => {
         const handleScroll = () => {
@@ -39,7 +40,7 @@ export function Layout({ children }) {
                     </Link>
 
                     <nav className="app-nav" aria-label="Primary">
-                        {siteConfig.navItems.map((item, index) => {
+                        {visibleNavItems.map((item, index) => {
                             const isActive = item.path === "/" ? location.pathname === "/" : location.pathname.startsWith(item.path);
 
                             return (
