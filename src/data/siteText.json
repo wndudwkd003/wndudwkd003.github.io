@@ -86,13 +86,24 @@
             "title": "Timeline",
             "entries": [
                 {
+                    "period": "2026.04 - Present",
+                    "title": "ACM SIGIR Student Member",
+                    "description": ""
+                },
+                {
                     "period": "2025.03 - Present",
                     "title": "M.S. Program",
-                    "description": "M.S. student in the Department of Computer Science & Engineering"
+                    "description": "M.S. student in the Department of Computer Science & Engineering at Gyeongsang National University"
                 },
                 {
                     "period": "2025.03 - Present",
                     "title": "IDEALAB Full-Time Researcher",
+                    "description": ""
+                },
+
+                {
+                    "period": "2024.06 - 2025.06",
+                    "title": "KIISE Student Member",
                     "description": ""
                 },
 
@@ -115,7 +126,7 @@
                 {
                     "period": "2019.03 - 2025.02",
                     "title": "Undergraduate Program",
-                    "description": "B.S. in Computer Science & Engineering (Computer Software Major) and B.S. in Smart Manufacturing ICT (USG Convergence Major)"
+                    "description": "B.S. in Computer Science & Engineering (Computer Software Major) and B.S. in Smart Manufacturing ICT (USG Convergence Major) at Gyeongsang National University"
                 }
             ]
         },
