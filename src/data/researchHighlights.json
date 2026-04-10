@@ -1,0 +1,126 @@
+{
+    "sectionLabel": "Research Areas",
+    "title": "Research Areas",
+    "description": "A brief overview of my current research interests across autonomous driving, multi-agent systems, and data-centric AI.",
+    "cta": {
+        "label": "Scroll to Research",
+        "hint": "See more details below."
+    },
+    "items": [
+        {
+            "id": "autonomous-driving-sensor-fusion",
+            "variant": "timeline",
+            "eyebrow": "Autonomous Driving / Sensor Fusion",
+            "title": "-",
+            "summary": "-",
+            "tags": ["-"],
+            "media": {
+                "src": "awards/f1tenth-icra2024_2024-05-14/a7.gif",
+                "alt": "Autonomous driving demo placeholder"
+            },
+            "metrics": [
+                {
+                    "label": "-",
+                    "value": "-"
+                },
+                {
+                    "label": "-",
+                    "value": "-"
+                },
+                {
+                    "label": "-",
+                    "value": "-"
+                }
+            ],
+            "stages": [
+                {
+                    "title": "-",
+                    "copy": "-"
+                },
+                {
+                    "title": "-",
+                    "copy": "-"
+                },
+                {
+                    "title": "-",
+                    "copy": "-"
+                }
+            ],
+            "links": []
+        },
+        {
+            "id": "llm-multiagent-systems",
+            "variant": "command-center",
+            "eyebrow": "LLM / Multi-Agent Systems",
+            "title": "-",
+            "summary": "-",
+            "tags": ["-"],
+            "panels": [
+                {
+                    "label": "-",
+                    "value": "-"
+                },
+                {
+                    "label": "-",
+                    "value": "-"
+                },
+                {
+                    "label": "-",
+                    "value": "-"
+                }
+            ],
+            "agents": [
+                {
+                    "name": "-",
+                    "role": "-",
+                    "state": "-"
+                },
+                {
+                    "name": "-",
+                    "role": "-",
+                    "state": "-"
+                },
+                {
+                    "name": "-",
+                    "role": "-",
+                    "state": "-"
+                }
+            ],
+            "messages": [
+                "-",
+                "-",
+                "-"
+            ],
+            "links": []
+        },
+        {
+            "id": "missing-data-synthetic-data",
+            "variant": "editorial",
+            "eyebrow": "Missing Data / Synthetic Data",
+            "title": "-",
+            "summary": "-",
+            "tags": ["-"],
+            "callouts": [
+                {
+                    "title": "-",
+                    "copy": "-"
+                },
+                {
+                    "title": "-",
+                    "copy": "-"
+                },
+                {
+                    "title": "-",
+                    "copy": "-"
+                }
+            ],
+            "comparison": {
+                "leftLabel": "-",
+                "leftTitle": "-",
+                "rightLabel": "-",
+                "rightTitle": "-"
+            },
+            "links": []
+        }
+    ]
+}

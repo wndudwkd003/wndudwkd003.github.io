@@ -3,6 +3,8 @@ import { Layout } from "../components/layout/Layout";
 import { projects } from "../data/projects";
 import { publications } from "../data/publications";
 import { awards } from "../data/awards";
+import { RESEARCH_STAGE_ID, ResearchShowcase } from "../components/home/ResearchShowcase";
+import researchHighlights from "../data/researchHighlights.json";
 import siteText from "../data/siteText.json";
 
 function getLatestByDate(items) {
@@ -36,6 +38,20 @@ export function HomePage() {
         publications: publications.length,
         projects: projects.length,
         activities: awards.length,
+    };
+    const scrollToResearchShowcase = () => {
+        const target = document.getElementById(RESEARCH_STAGE_ID);
+        if (!target) return;
+
+        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const header = document.querySelector(".app-header");
+        const headerHeight = header instanceof HTMLElement ? header.getBoundingClientRect().height : 0;
+        const targetTop = target.getBoundingClientRect().top + window.scrollY - headerHeight;
+
+        window.scrollTo({
+            top: Math.max(targetTop, 0),
+            behavior: prefersReducedMotion ? "auto" : "smooth",
+        });
     };
 
     return (
@@ -141,6 +157,34 @@ export function HomePage() {
                         </Link>
                     </article>
                 </section>
+
+                <section className="home-scroll-bridge" aria-label="Scroll to research section">
+                    <button
+                        type="button"
+                        className="home-scroll-button"
+                        aria-controls={RESEARCH_STAGE_ID}
+                        onClick={scrollToResearchShowcase}
+                    >
+                        <span className="home-scroll-button-copy">
+                            <span className="home-scroll-button-label">{researchHighlights.cta.label}</span>
+                            <span className="home-scroll-button-hint">{researchHighlights.cta.hint}</span>
+                        </span>
+                        <span className="home-scroll-button-icon" aria-hidden="true">
+                            <svg viewBox="0 0 24 24" className="home-scroll-button-icon-svg">
+                                <path
+                                    d="M12 5.5v12m0 0-4.5-4.5M12 17.5l4.5-4.5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                />
+                            </svg>
+                        </span>
+                    </button>
+                </section>
+
+                <ResearchShowcase />
             </div>
         </Layout>
     );
