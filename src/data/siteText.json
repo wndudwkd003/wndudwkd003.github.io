@@ -18,7 +18,7 @@
         "title": "About Me.",
         "leadLines": [
             "Hi! I am Juyoung Kim, a master's student in the Department of Computer Science & Engineering at Gyeongsang National University.",
-            "My research spans robotics, sensor fusion, multi-agent systems, LLMs, synthetic data generation, and missing data."
+            "My research spans robotics, sensor fusion, LLM systems, multi-agent systems, synthetic data generation, and missing data."
         ],
         "photo": {
             "imagePath": "public\\52495773.png",
@@ -40,7 +40,7 @@
         ],
         "focus": {
             "label": "Research Interests",
-            "tags": ["#Robotics", "#LLMs", "#ComputerVision", "#AI"]
+            "tags": ["#Robotics", "#LLM Systems", "#ComputerVision", "#AI"]
         },
         "recentPublication": {
             "label": "Recent publication",
@@ -53,37 +53,11 @@
             "fallbackTitle": "Recent activity will appear here.",
             "fallbackCopy": "Awards, talks, competitions, and academic activities are collected in one place.",
             "linkLabel": "Activities"
-        },
-        "researchStoryBridges": [
-            {
-                "id": "story-bridge-00",
-                "beforeItemId": "autonomous-driving-sensor-fusion",
-                "eyebrow": "Research Narrative",
-                "copy": "The story begins with sensing the world as faithfully as possible, because every later decision depends on how well uncertainty is first understood."
-            },
-            {
-                "id": "story-bridge-01",
-                "afterItemId": "autonomous-driving-sensor-fusion",
-                "eyebrow": "Research Flow",
-                "copy": "I start from physical-world uncertainty, then move toward coordination and decision-making where multiple models or agents have to work together."
-            },
-            {
-                "id": "story-bridge-02",
-                "afterItemId": "llm-multiagent-systems",
-                "eyebrow": "Next Question",
-                "copy": "From there, the focus shifts to the quality of the data itself, asking how missing or synthetic signals reshape what an intelligent system can actually learn."
-            },
-            {
-                "id": "story-bridge-03",
-                "afterItemId": "missing-data-synthetic-data",
-                "eyebrow": "Looking Ahead",
-                "copy": "Taken together, these topics build one larger narrative: designing AI systems that stay reliable even when the world is noisy, incomplete, and constantly changing."
-            }
-        ]
+        }
     },
     "projects": {
         "title": "Projects",
-        "description": "A curated list of projects, prototypes, and implementation notes, arranged in a cleaner reading flow."
+        "description": "Assignment Participation Records."
     },
     "publications": {
         "title": "Publications",
@@ -91,7 +65,7 @@
     },
     "awards": {
         "title": "Activities & Awards",
-        "description": "A chronological archive of activities, awards, conference appearances, and selected records."
+        "description": "Activities, awards, conference appearances, and selected records."
     },
     "other": {
         "title": "Other",
@@ -107,7 +81,7 @@
                 "Autonomous Driving",
                 "LiDAR-Camera Calibration",
                 "Multi-Agent Systems",
-                "Large Language Models",
+                "LLM Systems",
                 "Synthetic Data Generation",
                 "Missing Data Imputation",
                 "Vision-Language-Action Models"

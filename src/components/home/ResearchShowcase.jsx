@@ -1,5 +1,4 @@
 import researchHighlights from "../../data/researchHighlights.json";
-import siteText from "../../data/siteText.json";
 import { ResearchSectionRenderer } from "./research/ResearchSectionRenderer";
 import { useRevealOnScroll } from "./research/useRevealOnScroll";
 import "./research/ResearchShowcase.css";
@@ -8,7 +7,7 @@ export const RESEARCH_STAGE_ID = "selected-research-stage";
 
 export function ResearchShowcase() {
     const baseItems = Array.isArray(researchHighlights.items) ? researchHighlights.items : [];
-    const storyBridges = Array.isArray(siteText.home?.researchStoryBridges) ? siteText.home.researchStoryBridges : [];
+    const storyBridges = Array.isArray(researchHighlights.researchStoryBridges) ? researchHighlights.researchStoryBridges : [];
     const hasItems = baseItems.length > 0;
     const displayItems = hasItems
         ? baseItems.flatMap((item) => {

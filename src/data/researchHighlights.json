@@ -1,11 +1,37 @@
 {
     "sectionLabel": "Research Areas",
     "title": "Research Areas",
-    "description": "A brief overview of my current research interests across autonomous driving, multi-agent systems, and data-centric AI.",
+    "description": "A overview of my current research interests across autonomous driving, multi-agent systems, and data-centric AI.",
     "cta": {
         "label": "Scroll to Research",
         "hint": "See more details below."
     },
+    "researchStoryBridges": [
+        {
+            "id": "story-bridge-00",
+            "beforeItemId": "autonomous-driving-sensor-fusion",
+            "eyebrow": "Research Narrative",
+            "copy": "An unexpected but valuable opportunity first led me into autonomous driving, where I became interested in how perception and control actions can work together in real-world systems."
+        },
+        {
+            "id": "story-bridge-01",
+            "afterItemId": "autonomous-driving-sensor-fusion",
+            "eyebrow": "Research Flow",
+            "copy": "Research in autonomous driving naturally drew my attention to AI and deep learning more broadly, and the rapid rise of LLMs further encouraged me to expand my research in that direction."
+        },
+        {
+            "id": "story-bridge-02",
+            "afterItemId": "llm-multiagent-systems",
+            "eyebrow": "Next Question",
+            "copy": "As my interest in LLM systems, RAG, and efficient agent-based workflows grew, I became increasingly interested in studying these directions in the context of the manufacturing industry, together with broader data-centric AI topics such as missing data and data quality."
+        },
+        {
+            "id": "story-bridge-03",
+            "afterItemId": "missing-data-synthetic-data",
+            "eyebrow": "Looking Ahead",
+            "copy": "Looking ahead, I hope to keep refining these directions while also exploring emerging domains where reliable and practical AI systems can make a meaningful impact."
+        }
+    ],
     "items": [
         {
             "id": "autonomous-driving-sensor-fusion",
@@ -86,11 +112,7 @@
                     "state": "-"
                 }
             ],
-            "messages": [
-                "-",
-                "-",
-                "-"
-            ],
+            "messages": ["-", "-", "-"],
             "links": []
         },
         {
