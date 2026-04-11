@@ -4,6 +4,7 @@ import { HomePage } from "./routes/HomePage";
 import { PublicationsPage } from "./routes/PublicationsPage";
 import { OtherPage } from "./routes/OtherPage";
 import { AwardsPage } from "./routes/AwardsPage";
+import { HiddenPage } from "./routes/HiddenPage";
 
 function App() {
     return (
@@ -13,6 +14,7 @@ function App() {
                 <Route path="/publications" element={<PublicationsPage />} />
                 <Route path="/awards" element={<AwardsPage />} />
                 <Route path="/other" element={<OtherPage />} />
+                <Route path="/hidden" element={<HiddenPage />} />
             </Routes>
         </HashRouter>
     );

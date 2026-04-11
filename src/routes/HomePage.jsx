@@ -1,4 +1,6 @@
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Layout } from "../components/layout/Layout";
 import { projects } from "../data/projects";
 import { publications } from "../data/publications";
@@ -31,17 +33,62 @@ function normalizePhotoSrc(path) {
 }
 
 export function HomePage() {
+    const navigate = useNavigate();
     const latestPublication = getLatestByDate(publications);
     const latestAward = getLatestByDate(awards);
     const photoSrc = normalizePhotoSrc(siteText.home.photo.imagePath);
     const certificateCount = Array.isArray(siteText.other.certificates?.items) ? siteText.other.certificates.items.length : 0;
     const visibleStats = siteText.home.stats.filter((item) => item.hidden !== true);
+    const [photoClickCount, setPhotoClickCount] = useState(0);
+    const [photoHint, setPhotoHint] = useState("");
     const statValueMap = {
         publications: publications.length,
         projects: projects.length,
         certificates: certificateCount,
         activities: awards.length,
     };
+
+    useEffect(() => {
+        if (!photoHint) return undefined;
+
+        const timer = window.setTimeout(() => {
+            setPhotoHint("");
+        }, 1800);
+
+        return () => window.clearTimeout(timer);
+    }, [photoHint]);
+
+    useEffect(() => {
+        if (photoClickCount < 1 || photoClickCount >= 5) return undefined;
+
+        const resetTimer = window.setTimeout(() => {
+            setPhotoClickCount(0);
+            setPhotoHint("");
+        }, 5000);
+
+        return () => window.clearTimeout(resetTimer);
+    }, [photoClickCount]);
+
+    const handlePhotoClick = () => {
+        const nextCount = photoClickCount + 1;
+        setPhotoClickCount(nextCount);
+
+        if (nextCount === 3) {
+            setPhotoHint("2번 남았습니다.");
+            return;
+        }
+
+        if (nextCount === 4) {
+            setPhotoHint("1번 남았습니다.");
+            return;
+        }
+
+        if (nextCount >= 5) {
+            setPhotoHint("");
+            navigate("/hidden");
+        }
+    };
+
     const scrollToResearchShowcase = () => {
         const target = document.getElementById(RESEARCH_STAGE_ID);
         if (!target) return;
@@ -72,13 +119,20 @@ export function HomePage() {
 
                     <div className={`home-photo-slot ${photoSrc ? "has-image" : ""}`} aria-label="Profile photo area">
                         {photoSrc ? (
-                            <div className="home-photo-frame">
-                                <img
-                                    src={photoSrc}
-                                    alt={`${siteText.home.profile.name} profile`}
-                                    className="home-photo-image"
-                                />
-                            </div>
+                            <button
+                                type="button"
+                                className="home-photo-trigger"
+                                onClick={handlePhotoClick}
+                                aria-label={`${siteText.home.profile.name} profile secret trigger`}
+                            >
+                                <div className="home-photo-frame">
+                                    <img
+                                        src={photoSrc}
+                                        alt={`${siteText.home.profile.name} profile`}
+                                        className="home-photo-image"
+                                    />
+                                </div>
+                            </button>
                         ) : (
                             <div className="home-photo-slot-inner">
                                 <span className="home-photo-slot-label">{siteText.home.photo.label}</span>
@@ -188,6 +242,7 @@ export function HomePage() {
                 </section>
 
                 <ResearchShowcase />
+                {photoHint ? createPortal(<div className="home-photo-hint">{photoHint}</div>, document.body) : null}
             </div>
         </Layout>
     );
