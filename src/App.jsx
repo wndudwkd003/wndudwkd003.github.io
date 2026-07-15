@@ -1,5 +1,5 @@
 // src/App.jsx
-import { HashRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HomePage } from "./routes/HomePage";
 import { PublicationsPage } from "./routes/PublicationsPage";
 import { OtherPage } from "./routes/OtherPage";
@@ -8,7 +8,7 @@ import { HiddenPage } from "./routes/HiddenPage";
 
 function App() {
     return (
-        <HashRouter>
+        <BrowserRouter>
             <Routes>
                 <Route path="/" element={<HomePage />} />
                 <Route path="/publications" element={<PublicationsPage />} />
@@ -16,7 +16,7 @@ function App() {
                 <Route path="/other" element={<OtherPage />} />
                 <Route path="/hidden" element={<HiddenPage />} />
             </Routes>
-        </HashRouter>
+        </BrowserRouter>
     );
 }
 
