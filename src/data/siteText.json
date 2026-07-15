@@ -36,7 +36,7 @@
             { "key": "publications", "label": "Publications" },
             { "key": "activities", "label": "Activities" },
             { "key": "projects", "label": "Projects", "hidden": true },
-            { "key": "certificates", "label": "Certificates" }
+            { "key": "certificates", "label": "Certificates", "hidden": true }
         ],
         "focus": {
             "label": "Research Interests",
@@ -144,6 +144,7 @@
             ]
         },
         "certificates": {
+            "hidden": true,
             "title": "Certificates",
             "emptyCopy": "Add certificate records in siteText.json.",
             "items": [

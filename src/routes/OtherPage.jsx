@@ -17,6 +17,7 @@ function getCertificateSortValue(value) {
 }
 
 export function OtherPage() {
+    const showCertificates = siteText.other.certificates?.hidden !== true;
     const certificates = Array.isArray(siteText.other.certificates?.items)
         ? [...siteText.other.certificates.items].sort(
               (a, b) => getCertificateSortValue(b.date) - getCertificateSortValue(a.date)
@@ -60,98 +61,100 @@ export function OtherPage() {
                     </div>
 
                     <div className="other-column">
-                        <section className="other-panel other-panel-certificates">
-                            <h3 className="other-panel-title">{siteText.other.certificates.title}</h3>
-                            {certificates.length > 0 ? (
-                                <ul className="other-certificate-list">
-                                    {certificates.map((item, index) => {
-                                        const itemId = item.id || `certificate-${index}`;
-                                        const panelId = `certificate-easter-egg-${index}`;
-                                        const isOpen = openCertificateId === itemId;
+                        {showCertificates ? (
+                            <section className="other-panel other-panel-certificates">
+                                <h3 className="other-panel-title">{siteText.other.certificates.title}</h3>
+                                {certificates.length > 0 ? (
+                                    <ul className="other-certificate-list">
+                                        {certificates.map((item, index) => {
+                                            const itemId = item.id || `certificate-${index}`;
+                                            const panelId = `certificate-easter-egg-${index}`;
+                                            const isOpen = openCertificateId === itemId;
 
-                                        return (
-                                            <li
-                                                key={`${item.title}-${item.issuer || ""}-${item.date || ""}`}
-                                                className={`other-certificate-item${isOpen ? " is-open" : ""}`}
-                                            >
-                                                <button
-                                                    type="button"
-                                                    className="other-certificate-trigger"
-                                                    aria-expanded={isOpen}
-                                                    aria-controls={panelId}
-                                                    onClick={() => setOpenCertificateId((prev) => (prev === itemId ? null : itemId))}
+                                            return (
+                                                <li
+                                                    key={`${item.title}-${item.issuer || ""}-${item.date || ""}`}
+                                                    className={`other-certificate-item${isOpen ? " is-open" : ""}`}
                                                 >
-                                                    <div className="other-certificate-copy">
-                                                        <p className="other-certificate-title">{item.title}</p>
-                                                        {item.issuer ? <p className="other-certificate-meta">{item.issuer}</p> : null}
-                                                    </div>
-                                                    <div className="other-certificate-side">
-                                                        {item.date ? <span className="other-certificate-year">{item.date}</span> : null}
-                                                        <span className={`other-certificate-toggle${isOpen ? " is-open" : ""}`} aria-hidden="true">
-                                                            <svg
-                                                                viewBox="0 0 24 24"
-                                                                className="other-certificate-toggle-icon"
-                                                            >
-                                                                <path
-                                                                    d="m7.5 10 4.5 4.5 4.5-4.5"
-                                                                    fill="none"
-                                                                    stroke="currentColor"
-                                                                    strokeWidth="2"
-                                                                    strokeLinecap="round"
-                                                                    strokeLinejoin="round"
-                                                                />
-                                                            </svg>
-                                                        </span>
-                                                    </div>
-                                                </button>
-                                                {item.easterEgg ? (
-                                                    <div
-                                                        id={panelId}
-                                                        className={`other-certificate-easter-egg${isOpen ? " is-open" : ""}`}
+                                                    <button
+                                                        type="button"
+                                                        className="other-certificate-trigger"
+                                                        aria-expanded={isOpen}
+                                                        aria-controls={panelId}
+                                                        onClick={() => setOpenCertificateId((prev) => (prev === itemId ? null : itemId))}
                                                     >
-                                                        <p className="other-certificate-easter-egg-copy">{item.easterEgg}</p>
-                                                        {item.url ? (
-                                                            <a
-                                                                href={item.url}
-                                                                target="_blank"
-                                                                rel="noreferrer"
-                                                                className="other-certificate-link"
-                                                                aria-label={`${item.title} link`}
-                                                            >
+                                                        <div className="other-certificate-copy">
+                                                            <p className="other-certificate-title">{item.title}</p>
+                                                            {item.issuer ? <p className="other-certificate-meta">{item.issuer}</p> : null}
+                                                        </div>
+                                                        <div className="other-certificate-side">
+                                                            {item.date ? <span className="other-certificate-year">{item.date}</span> : null}
+                                                            <span className={`other-certificate-toggle${isOpen ? " is-open" : ""}`} aria-hidden="true">
                                                                 <svg
                                                                     viewBox="0 0 24 24"
-                                                                    className="other-certificate-link-icon"
-                                                                    aria-hidden="true"
+                                                                    className="other-certificate-toggle-icon"
                                                                 >
                                                                     <path
-                                                                        d="M9 7h8v8"
+                                                                        d="m7.5 10 4.5 4.5 4.5-4.5"
                                                                         fill="none"
                                                                         stroke="currentColor"
-                                                                        strokeWidth="1.8"
-                                                                        strokeLinecap="round"
-                                                                        strokeLinejoin="round"
-                                                                    />
-                                                                    <path
-                                                                        d="M15.5 8.5 8 16"
-                                                                        fill="none"
-                                                                        stroke="currentColor"
-                                                                        strokeWidth="1.8"
+                                                                        strokeWidth="2"
                                                                         strokeLinecap="round"
                                                                         strokeLinejoin="round"
                                                                     />
                                                                 </svg>
-                                                            </a>
-                                                        ) : null}
-                                                    </div>
-                                                ) : null}
-                                            </li>
-                                        );
-                                    })}
-                                </ul>
-                            ) : (
-                                <p className="other-certificate-empty">{siteText.other.certificates.emptyCopy}</p>
-                            )}
-                        </section>
+                                                            </span>
+                                                        </div>
+                                                    </button>
+                                                    {item.easterEgg ? (
+                                                        <div
+                                                            id={panelId}
+                                                            className={`other-certificate-easter-egg${isOpen ? " is-open" : ""}`}
+                                                        >
+                                                            <p className="other-certificate-easter-egg-copy">{item.easterEgg}</p>
+                                                            {item.url ? (
+                                                                <a
+                                                                    href={item.url}
+                                                                    target="_blank"
+                                                                    rel="noreferrer"
+                                                                    className="other-certificate-link"
+                                                                    aria-label={`${item.title} link`}
+                                                                >
+                                                                    <svg
+                                                                        viewBox="0 0 24 24"
+                                                                        className="other-certificate-link-icon"
+                                                                        aria-hidden="true"
+                                                                    >
+                                                                        <path
+                                                                            d="M9 7h8v8"
+                                                                            fill="none"
+                                                                            stroke="currentColor"
+                                                                            strokeWidth="1.8"
+                                                                            strokeLinecap="round"
+                                                                            strokeLinejoin="round"
+                                                                        />
+                                                                        <path
+                                                                            d="M15.5 8.5 8 16"
+                                                                            fill="none"
+                                                                            stroke="currentColor"
+                                                                            strokeWidth="1.8"
+                                                                            strokeLinecap="round"
+                                                                            strokeLinejoin="round"
+                                                                        />
+                                                                    </svg>
+                                                                </a>
+                                                            ) : null}
+                                                        </div>
+                                                    ) : null}
+                                                </li>
+                                            );
+                                        })}
+                                    </ul>
+                                ) : (
+                                    <p className="other-certificate-empty">{siteText.other.certificates.emptyCopy}</p>
+                                )}
+                            </section>
+                        ) : null}
 
                         <section className="other-panel">
                             <h3 className="other-panel-title">{siteText.other.interests.title}</h3>
