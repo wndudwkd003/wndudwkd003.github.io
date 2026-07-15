@@ -77,6 +77,17 @@ export const publications = [
     // =========================
 
     {
+        id: "dom-journal-2026-7-10",
+        category: "국내 저널",
+        title: "자율주행 위험 판단을 위한 증거 기반 설명형 추론 프레임워크(EGRR)",
+        venue: "한국정보기술학회논문지, 24권, 6호, pp. 125-138, 2026.",
+        date: "2026-07-10",
+        authors: "이세연, 조신호, 민경제, 김주영, 김건우",
+        note: "(KCI 등재지)",
+        url: "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12888037",
+    },
+
+    {
         id: "dom-journal-2025-12",
         category: "국내 저널",
         title: "머신러닝 기반 가중합산기법을 활용한 지역소멸 위기 대응 방안: 경남 지역 관광 역량 진단 및 축제 활성화 분석정",
