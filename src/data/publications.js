@@ -26,7 +26,7 @@ export const publications = [
         date: "2026-04-04",
         authors: "Juyoung Kim, Ji-Hong Park, Sang-Min Choi and Gun-Woo Kim",
         note: "Short Papers Track",
-        url: "",
+        url: "https://dl.acm.org/doi/abs/10.1145/3805712.3809888",
     },
 
     {
