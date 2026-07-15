@@ -151,7 +151,7 @@ export const publications = [
         date: "2025-10-01",
         authors: "김주영, 박지홍, 이세연, 박수진, 김건우",
         note: "구두 발표 (우수논문상, 국립국어원장상)",
-        url: "https://koreascience.kr/article/CFKO202533654035400.pub?&lang=ko&orgId=sighlt",
+        url: "https://koreascience.kr/article/CFKO202533654035400.page",
     },
 
     {
