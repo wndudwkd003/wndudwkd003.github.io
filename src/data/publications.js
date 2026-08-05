@@ -4,15 +4,16 @@ export const publications = [
     // =========================
     // 국제 저널
     // =========================
-    // {
-    //   id: "int-journal-2025-001",
-    //   category: "국제 저널",
-    //   title: "논문 제목",
-    //   venue: "저널명",
-    //   date: "2025-10-01",
-    //   authors: "김주영, ...",
-    //   note: "Accepted / Published 등",
-    // },
+    {
+        id: "int-journal-2026-001",
+        category: "국제 저널",
+        title: "MARFI: Missingness-Aware Rectified-Flow Imputation for MNAR Data in Predictive Maintenance",
+        venue: "IEEE Access",
+        date: "2026-08-05",
+        authors: "Juyoung Kim, Ji-Hong Park, Sang-Min Choi and Gun-Woo Kim",
+        note: "(SCIE, IF: 4.2)",
+        url: "https://doi.org/10.1109/ACCESS.2026.3721507",
+    },
 
     // =========================
     // 국제 학회
@@ -25,7 +26,7 @@ export const publications = [
         venue: "The 49th International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR 2026)",
         date: "2026-04-04",
         authors: "Juyoung Kim, Ji-Hong Park, Sang-Min Choi and Gun-Woo Kim",
-        note: "Short Papers Track",
+        note: "Short Papers Track (BK21 CS 분야 우수학술대회)",
         url: "https://dl.acm.org/doi/abs/10.1145/3805712.3809888",
     },
 
@@ -68,7 +69,7 @@ export const publications = [
         venue: "The 8th International Conference on Mobile Internet Security (MobiSec) 2024",
         date: "2024-12-19",
         authors: "Ju-Young Kim, Ji-Hong Park and Gun-Woo Kim",
-        note: "Main Track (not in proceedings)",
+        note: "Main Track",
         url: "https://arxiv.org/abs/2512.08362",
     },
 
@@ -83,7 +84,7 @@ export const publications = [
         venue: "한국정보기술학회논문지, 24권, 6호, pp. 125-138, 2026.",
         date: "2026-07-10",
         authors: "이세연, 조신호, 민경제, 김주영, 김건우",
-        note: "(KCI 등재지)",
+        note: "(KCI)",
         url: "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12888037",
     },
 
@@ -94,7 +95,7 @@ export const publications = [
         venue: "한국정보기술학회논문지, 23권, 12호, pp. 21-37, 2025.",
         date: "2025-12-01",
         authors: "이세연, 박지홍, 김주영, 김건우",
-        note: "(KCI 등재지)",
+        note: "(KCI)",
         url: "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12540420",
     },
 
@@ -105,7 +106,7 @@ export const publications = [
         venue: "한국정보기술학회논문지, 23권, 1호, pp. 73-80, 2025.",
         date: "2025-01-01",
         authors: "김주영, 박지홍, 김건우",
-        note: "(KCI 등재지)",
+        note: "(KCI)",
         url: "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12039155",
     },
 
@@ -116,7 +117,7 @@ export const publications = [
         venue: "한국정보기술학회논문지, 23권, 1호, pp. 43-52, 2025.",
         date: "2025-01-01",
         authors: "박지홍, 김주영, 임소희, 김건우",
-        note: "(KCI 등재지)",
+        note: "(KCI)",
         url: "https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE12039152",
     },
 

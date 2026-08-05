@@ -1,7 +1,16 @@
 // src/data/awards.js
 
 export const awards = [
-
+    {
+        id: "SIGIR-2026-07",
+        title: "The 49th International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR 2026)",
+        org: "SIGIR 2026",
+        date: "2026-07-22",
+        description: "SIGIR 2026 국제 학술대회 논문 발표, Short Papers Track",
+        tags: ["학술대회"],
+        images: { count: 5 },
+        downloads: [],
+    },
     {
         id: "mobisec2025_2025-12-17",
         title: "The 9th International Conference on Mobile Internet Security (MobiSec 2025)",
@@ -11,7 +20,6 @@ export const awards = [
         tags: ["학술대회"],
         images: { count: 4 },
         downloads: [],
-
     },
     {
         id: "roboracer-autodrive-icra2024_2024-10-07",
@@ -24,7 +32,6 @@ export const awards = [
         images: { count: 4 },
         downloads: ["certificate.pdf"],
     },
-
 
     {
         id: "f1tenth-kc4_2025-11-6_1",
