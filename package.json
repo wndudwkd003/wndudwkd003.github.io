@@ -8,6 +8,7 @@
     "generate-thumbnails": "python python-scripts/generate_thumbnails.py",
     "generate-thumbnails:activities": "python python-scripts/generate_thumbnails.py --scope activities",
     "generate-thumbnails:publications": "python python-scripts/generate_thumbnails.py --scope publications",
+    "generate-thumbnails:projects": "python python-scripts/generate_thumbnails.py --scope projects",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"

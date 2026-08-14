@@ -27,6 +27,15 @@ function normalizePublicAsset(path) {
     return `/${normalized}`;
 }
 
+function getProjectThumbnailAsset(src) {
+    if (!src.startsWith("/projects/")) return "";
+
+    const match = src.match(/^(.*\/)([^/]+)\.(?:jpe?g|png)$/i);
+    if (!match) return "";
+
+    return `${match[1]}thumbnail/${match[2]}.webp`;
+}
+
 export function ResearchSectionRenderer({ item }) {
     const componentKey = item.type === "story" ? "story" : item.variant;
     const Component = VARIANT_COMPONENTS[componentKey] || ResearchVariantEditorial;
@@ -36,12 +45,18 @@ export function ResearchSectionRenderer({ item }) {
           ? [item.media]
           : [];
     const mediaItems = configuredMedia
-        .map((media, index) => ({
-            src: normalizePublicAsset(media?.src),
-            alt: media?.alt || `${item.title} media ${index + 1}`,
-            fit: media?.fit === "contain" ? "contain" : "cover",
-            theme: media?.theme === "light" ? "light" : "dark",
-        }))
+        .map((media, index) => {
+            const originalSrc = normalizePublicAsset(media?.src);
+            const thumbnailSrc = getProjectThumbnailAsset(originalSrc);
+
+            return {
+                src: thumbnailSrc || originalSrc,
+                fallbackSrc: thumbnailSrc ? originalSrc : undefined,
+                alt: media?.alt || `${item.title} media ${index + 1}`,
+                fit: media?.fit === "contain" ? "contain" : "cover",
+                theme: media?.theme === "light" ? "light" : "dark",
+            };
+        })
         .filter((media) => Boolean(media.src));
     const mediaSrc = mediaItems[0]?.src || "";
 

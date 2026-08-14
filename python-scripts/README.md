@@ -4,6 +4,7 @@
 
 - Activities keep the existing behavior: original width and quality 70.
 - Publications preserve the original aspect ratio, resize to a maximum width of 1080 pixels, and use quality 84.
+- Projects process only PNG/JPG/JPEG files at a maximum width of 1080 pixels and quality 100. GIF and WebP sources are left untouched.
 
 ## Install
 
@@ -22,6 +23,7 @@ Run only one profile:
 ```bash
 python python-scripts/generate_thumbnails.py --scope activities
 python python-scripts/generate_thumbnails.py --scope publications
+python python-scripts/generate_thumbnails.py --scope projects
 ```
 
 Optional:

@@ -1,15 +1,18 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 const DEFAULT_AUTOPLAY_MS = 6500;
 
 export function ResearchMediaCarousel({ items, title, autoplayMs = DEFAULT_AUTOPLAY_MS }) {
     const carouselRef = useRef(null);
+    const preloadersRef = useRef([]);
+    const preloadedSourcesRef = useRef(new Set());
     const [activeIndex, setActiveIndex] = useState(0);
     const [isLoaded, setIsLoaded] = useState(false);
     const [isInView, setIsInView] = useState(() => typeof IntersectionObserver === "undefined");
+    const [shouldPreload, setShouldPreload] = useState(() => typeof IntersectionObserver === "undefined");
     const [isPaused, setIsPaused] = useState(false);
     const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
-    const mediaItems = Array.isArray(items) ? items : [];
+    const mediaItems = useMemo(() => (Array.isArray(items) ? items : []), [items]);
     const mediaCount = mediaItems.length;
 
     useEffect(() => {
@@ -31,6 +34,42 @@ export function ResearchMediaCarousel({ items, title, autoplayMs = DEFAULT_AUTOP
         observer.observe(node);
         return () => observer.disconnect();
     }, []);
+
+    useEffect(() => {
+        const node = carouselRef.current;
+        if (!node || shouldPreload || typeof IntersectionObserver === "undefined") return undefined;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (!entry.isIntersecting) return;
+                setShouldPreload(true);
+                observer.disconnect();
+            },
+            { rootMargin: "1000px 0px" },
+        );
+        observer.observe(node);
+        return () => observer.disconnect();
+    }, [shouldPreload]);
+
+    useEffect(() => {
+        if (!shouldPreload || mediaCount <= 1) return;
+
+        const orderedMedia = [
+            ...mediaItems.slice(activeIndex + 1),
+            ...mediaItems.slice(0, activeIndex + 1),
+        ];
+
+        for (const media of orderedMedia) {
+            const src = String(media?.src || "").trim();
+            if (!src || preloadedSourcesRef.current.has(src)) continue;
+
+            preloadedSourcesRef.current.add(src);
+            const image = new window.Image();
+            image.decoding = "async";
+            image.src = src;
+            preloadersRef.current.push(image);
+        }
+    }, [activeIndex, mediaCount, mediaItems, shouldPreload]);
 
     useEffect(() => {
         if (mediaCount <= 1 || isPaused || !isInView || prefersReducedMotion || document.hidden) {
@@ -98,7 +137,8 @@ export function ResearchMediaCarousel({ items, title, autoplayMs = DEFAULT_AUTOP
                     src={activeMedia.src}
                     alt={activeMedia.alt || `${title} media ${safeActiveIndex + 1}`}
                     className={`research-timeline-image is-${activeMedia.fit}${isLoaded ? " is-loaded" : " is-loading"}`}
-                    loading="lazy"
+                    loading={shouldPreload ? "eager" : "lazy"}
+                    fetchPriority={shouldPreload ? "high" : "auto"}
                     decoding="async"
                     onLoad={() => setIsLoaded(true)}
                     onError={(event) => {

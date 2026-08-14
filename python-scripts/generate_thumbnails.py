@@ -14,6 +14,8 @@ DEFAULT_FORMAT = "webp"
 ROOT_DIR = Path(__file__).resolve().parent.parent
 DEFAULT_ACTIVITIES_DIR = ROOT_DIR / "public" / "awards"
 DEFAULT_PUBLICATIONS_DIR = ROOT_DIR / "public" / "papers"
+DEFAULT_PROJECTS_DIR = ROOT_DIR / "public" / "projects"
+PROJECT_SOURCE_EXTENSIONS = {".jpg", ".jpeg", ".png"}
 
 
 @dataclass(frozen=True)
@@ -22,6 +24,7 @@ class ThumbnailProfile:
     root_dir: Path
     max_width: int | None
     quality: int
+    source_extensions: frozenset[str]
 
 
 def parse_args() -> argparse.Namespace:
@@ -30,7 +33,7 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--scope",
-        choices=("all", "activities", "publications"),
+        choices=("all", "activities", "publications", "projects"),
         default="all",
         help="Choose which thumbnail profile to run. Default: all",
     )
@@ -49,6 +52,12 @@ def parse_args() -> argparse.Namespace:
         help=f"Publications root directory. Default: {DEFAULT_PUBLICATIONS_DIR}",
     )
     parser.add_argument(
+        "--projects-dir",
+        type=Path,
+        default=DEFAULT_PROJECTS_DIR,
+        help=f"Projects root directory. Default: {DEFAULT_PROJECTS_DIR}",
+    )
+    parser.add_argument(
         "--publications-max-width",
         type=int,
         default=1080,
@@ -59,6 +68,18 @@ def parse_args() -> argparse.Namespace:
         type=int,
         default=84,
         help="Publication JPG/WEBP quality. Default: 84",
+    )
+    parser.add_argument(
+        "--projects-max-width",
+        type=int,
+        default=1080,
+        help="Maximum project thumbnail width. Default: 1080",
+    )
+    parser.add_argument(
+        "--projects-quality",
+        type=int,
+        default=100,
+        help="Project JPG/WEBP quality. Default: 100",
     )
     parser.add_argument(
         "--format",
@@ -86,14 +107,14 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def iter_source_images(root_dir: Path):
+def iter_source_images(root_dir: Path, source_extensions: frozenset[str]):
     for dirpath, dirnames, filenames in os.walk(root_dir):
         dirpath = Path(dirpath)
         dirnames[:] = [name for name in dirnames if name != THUMBNAIL_DIRNAME]
 
         for filename in filenames:
             source_path = dirpath / filename
-            if source_path.suffix.lower() in SUPPORTED_EXTENSIONS:
+            if source_path.suffix.lower() in source_extensions:
                 yield source_path
 
 
@@ -242,13 +263,22 @@ def remove_stale_thumbnails(target_path: Path) -> None:
 def build_profiles(args: argparse.Namespace) -> list[ThumbnailProfile]:
     profiles = [
         # Preserve the existing Activities behavior: no default resize and quality 70.
-        ThumbnailProfile("activities", args.activities_dir.resolve(), None, 70),
+        ThumbnailProfile("activities", args.activities_dir.resolve(), None, 70, frozenset(SUPPORTED_EXTENSIONS)),
         # Publication figures retain their aspect ratio at a maximum width of 1080.
         ThumbnailProfile(
             "publications",
             args.publications_dir.resolve(),
             args.publications_max_width,
             args.publications_quality,
+            frozenset(SUPPORTED_EXTENSIONS),
+        ),
+        # Project thumbnails are only created for static PNG/JPG sources.
+        ThumbnailProfile(
+            "projects",
+            args.projects_dir.resolve(),
+            args.projects_max_width,
+            args.projects_quality,
+            frozenset(PROJECT_SOURCE_EXTENSIONS),
         ),
     ]
 
@@ -259,6 +289,7 @@ def build_profiles(args: argparse.Namespace) -> list[ThumbnailProfile]:
             profile.root_dir,
             args.max_width if args.max_width is not None else profile.max_width,
             args.quality if args.quality is not None else profile.quality,
+            profile.source_extensions,
         )
         for profile in selected
     ]
@@ -276,7 +307,7 @@ def generate_for_profile(profile: ThumbnailProfile, args: argparse.Namespace) ->
         f"format={args.format}, max_width={profile.max_width}, quality={profile.quality}"
     )
 
-    for source_path in iter_source_images(profile.root_dir):
+    for source_path in iter_source_images(profile.root_dir, profile.source_extensions):
         target_path = thumbnail_path_for_format(source_path, args.format)
 
         if target_path.exists() and not args.overwrite:
@@ -300,8 +331,14 @@ def main() -> int:
         raise SystemExit("--max-width must be greater than 0.")
     if args.publications_max_width <= 0:
         raise SystemExit("--publications-max-width must be greater than 0.")
+    if args.projects_max_width <= 0:
+        raise SystemExit("--projects-max-width must be greater than 0.")
 
-    qualities = [value for value in (args.quality, args.publications_quality) if value is not None]
+    qualities = [
+        value
+        for value in (args.quality, args.publications_quality, args.projects_quality)
+        if value is not None
+    ]
     if any(value < 1 or value > 100 for value in qualities):
         raise SystemExit("Quality must be between 1 and 100.")
 
@@ -318,4 +355,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     sys.exit(main())
-
