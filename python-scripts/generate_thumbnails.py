@@ -3,40 +3,80 @@ from __future__ import annotations
 import argparse
 import os
 import sys
+from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
 
 THUMBNAIL_DIRNAME = "thumbnail"
-SUPPORTED_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".gif"}
+SUPPORTED_EXTENSIONS = {".jpg", ".jpeg", ".png", ".webp", ".gif", ".avif"}
+ANIMATED_SOURCE_FORMATS = {"GIF", "PNG", "WEBP"}
 DEFAULT_FORMAT = "webp"
 ROOT_DIR = Path(__file__).resolve().parent.parent
-DEFAULT_AWARDS_DIR = ROOT_DIR / "public" / "awards"
+DEFAULT_ACTIVITIES_DIR = ROOT_DIR / "public" / "awards"
+DEFAULT_PUBLICATIONS_DIR = ROOT_DIR / "public" / "papers"
+
+
+@dataclass(frozen=True)
+class ThumbnailProfile:
+    name: str
+    root_dir: Path
+    max_width: int | None
+    quality: int
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Create missing thumbnails under public/awards/**/thumbnail."
+        description="Create missing thumbnails for activities and publication figures."
     )
     parser.add_argument(
+        "--scope",
+        choices=("all", "activities", "publications"),
+        default="all",
+        help="Choose which thumbnail profile to run. Default: all",
+    )
+    parser.add_argument(
+        "--activities-dir",
         "--awards-dir",
+        dest="activities_dir",
         type=Path,
-        default=DEFAULT_AWARDS_DIR,
-        help=f"Root awards directory. Default: {DEFAULT_AWARDS_DIR}",
+        default=DEFAULT_ACTIVITIES_DIR,
+        help=f"Activities root directory. Default: {DEFAULT_ACTIVITIES_DIR}",
+    )
+    parser.add_argument(
+        "--publications-dir",
+        type=Path,
+        default=DEFAULT_PUBLICATIONS_DIR,
+        help=f"Publications root directory. Default: {DEFAULT_PUBLICATIONS_DIR}",
+    )
+    parser.add_argument(
+        "--publications-max-width",
+        type=int,
+        default=1080,
+        help="Maximum publication thumbnail width. Default: 1080",
+    )
+    parser.add_argument(
+        "--publications-quality",
+        type=int,
+        default=84,
+        help="Publication JPG/WEBP quality. Default: 84",
     )
     parser.add_argument(
         "--format",
         choices=("jpg", "webp", "png"),
         default=DEFAULT_FORMAT,
-        help=(
-            "Thumbnail file format. JPG and WEBP are compressed formats. "
-            f"Default: {DEFAULT_FORMAT}"
-        ),
+        help=f"Thumbnail file format. Default: {DEFAULT_FORMAT}",
     )
     parser.add_argument(
         "--max-width",
         type=int,
         default=None,
-        help="Resize only images wider than this many pixels before saving.",
+        help="Optional global max-width override for the selected profiles.",
+    )
+    parser.add_argument(
+        "--quality",
+        type=int,
+        default=None,
+        help="Optional global JPG/WEBP quality override for the selected profiles.",
     )
     parser.add_argument(
         "--overwrite",
@@ -46,8 +86,8 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def iter_source_images(awards_dir: Path):
-    for dirpath, dirnames, filenames in os.walk(awards_dir):
+def iter_source_images(root_dir: Path):
+    for dirpath, dirnames, filenames in os.walk(root_dir):
         dirpath = Path(dirpath)
         dirnames[:] = [name for name in dirnames if name != THUMBNAIL_DIRNAME]
 
@@ -119,11 +159,23 @@ def transpose_if_needed(image, source_path: Path, image_ops_module):
     return image_ops_module.exif_transpose(image)
 
 
-def save_thumbnail(source_path: Path, target_path: Path, output_format: str, max_width: int | None) -> None:
+def save_thumbnail(
+    source_path: Path,
+    target_path: Path,
+    output_format: str,
+    max_width: int | None,
+    quality: int,
+) -> None:
     Image, ImageOps, ImageSequence = load_pillow()
 
     with Image.open(source_path) as original:
-        if output_format == "webp" and getattr(original, "is_animated", False):
+        preserve_animation = (
+            output_format == "webp"
+            and getattr(original, "is_animated", False)
+            and original.format in ANIMATED_SOURCE_FORMATS
+        )
+
+        if preserve_animation:
             frames = []
             durations = []
             loop = original.info.get("loop", 0)
@@ -149,7 +201,7 @@ def save_thumbnail(source_path: Path, target_path: Path, output_format: str, max
                 duration=durations,
                 loop=loop,
                 optimize=True,
-                quality=70,
+                quality=quality,
                 method=6,
             )
             return
@@ -165,11 +217,11 @@ def save_thumbnail(source_path: Path, target_path: Path, output_format: str, max
 
     save_kwargs = {"optimize": True}
     if output_format == "jpg":
-        save_kwargs.update(format="JPEG", quality=78, progressive=True)
+        save_kwargs.update(format="JPEG", quality=quality, progressive=True)
     elif output_format == "png":
         save_kwargs.update(format="PNG", compress_level=9)
     elif output_format == "webp":
-        save_kwargs.update(format="WEBP", quality=70, method=6)
+        save_kwargs.update(format="WEBP", quality=quality, method=6)
 
     target_path.parent.mkdir(parents=True, exist_ok=True)
     frame.save(target_path, **save_kwargs)
@@ -187,18 +239,44 @@ def remove_stale_thumbnails(target_path: Path) -> None:
             stale_path.unlink()
 
 
-def main() -> int:
-    args = parse_args()
-    awards_dir = args.awards_dir.resolve()
+def build_profiles(args: argparse.Namespace) -> list[ThumbnailProfile]:
+    profiles = [
+        # Preserve the existing Activities behavior: no default resize and quality 70.
+        ThumbnailProfile("activities", args.activities_dir.resolve(), None, 70),
+        # Publication figures retain their aspect ratio at a maximum width of 1080.
+        ThumbnailProfile(
+            "publications",
+            args.publications_dir.resolve(),
+            args.publications_max_width,
+            args.publications_quality,
+        ),
+    ]
 
-    if not awards_dir.exists():
-        print(f"No awards directory found at {awards_dir}. Skipping thumbnail generation.")
-        return 0
+    selected = profiles if args.scope == "all" else [p for p in profiles if p.name == args.scope]
+    return [
+        ThumbnailProfile(
+            profile.name,
+            profile.root_dir,
+            args.max_width if args.max_width is not None else profile.max_width,
+            args.quality if args.quality is not None else profile.quality,
+        )
+        for profile in selected
+    ]
+
+
+def generate_for_profile(profile: ThumbnailProfile, args: argparse.Namespace) -> tuple[int, int]:
+    if not profile.root_dir.exists():
+        print(f"[{profile.name}] No directory found at {profile.root_dir}. Skipping.")
+        return 0, 0
 
     created = 0
     skipped = 0
+    print(
+        f"[{profile.name}] root={profile.root_dir.relative_to(ROOT_DIR)}, "
+        f"format={args.format}, max_width={profile.max_width}, quality={profile.quality}"
+    )
 
-    for source_path in iter_source_images(awards_dir):
+    for source_path in iter_source_images(profile.root_dir):
         target_path = thumbnail_path_for_format(source_path, args.format)
 
         if target_path.exists() and not args.overwrite:
@@ -206,14 +284,38 @@ def main() -> int:
             skipped += 1
             continue
 
-        save_thumbnail(source_path, target_path, args.format, args.max_width)
+        save_thumbnail(source_path, target_path, args.format, profile.max_width, profile.quality)
         remove_stale_thumbnails(target_path)
         created += 1
         print(f"Created thumbnail: {target_path.relative_to(ROOT_DIR)}")
 
-    print(f"Thumbnail generation complete. Created: {created}, skipped: {skipped}")
+    print(f"[{profile.name}] complete. Created: {created}, skipped: {skipped}")
+    return created, skipped
+
+
+def main() -> int:
+    args = parse_args()
+
+    if args.max_width is not None and args.max_width <= 0:
+        raise SystemExit("--max-width must be greater than 0.")
+    if args.publications_max_width <= 0:
+        raise SystemExit("--publications-max-width must be greater than 0.")
+
+    qualities = [value for value in (args.quality, args.publications_quality) if value is not None]
+    if any(value < 1 or value > 100 for value in qualities):
+        raise SystemExit("Quality must be between 1 and 100.")
+
+    total_created = 0
+    total_skipped = 0
+    for profile in build_profiles(args):
+        created, skipped = generate_for_profile(profile, args)
+        total_created += created
+        total_skipped += skipped
+
+    print(f"Thumbnail generation complete. Created: {total_created}, skipped: {total_skipped}")
     return 0
 
 
 if __name__ == "__main__":
     sys.exit(main())
+

@@ -2,7 +2,6 @@ import { ResearchVariantCommandCenter } from "./ResearchVariantCommandCenter";
 import { ResearchVariantEditorial } from "./ResearchVariantEditorial";
 import { ResearchStoryBridge } from "./ResearchStoryBridge";
 import { ResearchVariantTimeline } from "./ResearchVariantTimeline";
-import { useRevealOnScroll } from "./useRevealOnScroll";
 
 const VARIANT_COMPONENTS = {
     timeline: ResearchVariantTimeline,
@@ -31,11 +30,20 @@ function normalizePublicAsset(path) {
 export function ResearchSectionRenderer({ item }) {
     const componentKey = item.type === "story" ? "story" : item.variant;
     const Component = VARIANT_COMPONENTS[componentKey] || ResearchVariantEditorial;
-    const { ref, isVisible } = useRevealOnScroll({
-        threshold: 0.16,
-        rootMargin: "0px 0px -8% 0px",
-    });
-    const mediaSrc = normalizePublicAsset(item.media?.src);
+    const configuredMedia = Array.isArray(item.media?.items)
+        ? item.media.items
+        : item.media?.src
+          ? [item.media]
+          : [];
+    const mediaItems = configuredMedia
+        .map((media, index) => ({
+            src: normalizePublicAsset(media?.src),
+            alt: media?.alt || `${item.title} media ${index + 1}`,
+            fit: media?.fit === "contain" ? "contain" : "cover",
+            theme: media?.theme === "light" ? "light" : "dark",
+        }))
+        .filter((media) => Boolean(media.src));
+    const mediaSrc = mediaItems[0]?.src || "";
 
-    return <Component item={item} mediaSrc={mediaSrc} revealRef={ref} isVisible={isVisible} />;
+    return <Component item={item} mediaSrc={mediaSrc} mediaItems={mediaItems} />;
 }

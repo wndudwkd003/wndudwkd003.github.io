@@ -18,7 +18,7 @@
         "title": "About Me.",
         "leadLines": [
             "Hi! I am Juyoung Kim, a master's student in the Department of Computer Science & Engineering at Gyeongsang National University.",
-            "My research spans robotics, sensor fusion, LLM systems, multi-agent systems, synthetic data generation, and missing data."
+            "My primary research focuses on robotics, particularly Vision-Language-Action (VLA) systems. I am also interested in LLM systems, including memory- and agent-based approaches."
         ],
         "photo": {
             "imagePath": "public\\52495773.png",
@@ -40,7 +40,7 @@
         ],
         "focus": {
             "label": "Research Interests",
-            "tags": ["#Robotics", "#LLM Systems", "#ComputerVision", "#AI"]
+            "tags": ["#VLA Systems", "#LLM Systems", "#AI"]
         },
         "recentPublication": {
             "label": "Recent publication",
@@ -91,11 +91,6 @@
             "title": "Timeline",
             "entries": [
                 {
-                    "period": "2026.04 - Present",
-                    "title": "ACM SIGIR Student Member",
-                    "description": ""
-                },
-                {
                     "period": "2025.03 - Present",
                     "title": "M.S. Program",
                     "description": "M.S. student in the Department of Computer Science & Engineering at Gyeongsang National University"
@@ -105,13 +100,6 @@
                     "title": "IDEALAB Full-Time Researcher",
                     "description": ""
                 },
-
-                {
-                    "period": "2024.06 - 2025.06",
-                    "title": "KIISE Student Member",
-                    "description": ""
-                },
-
                 {
                     "period": "2024.01 - 2025.02",
                     "title": "IDEALAB Undergraduate Intern",

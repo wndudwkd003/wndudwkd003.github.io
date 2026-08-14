@@ -23,3 +23,8 @@ dist-ssr
 *.sln
 *.sw?
 .venv
+
+
+mp4
+webp
+python-scripts\__pycache__

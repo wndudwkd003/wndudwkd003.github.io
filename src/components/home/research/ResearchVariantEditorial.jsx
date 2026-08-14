@@ -1,6 +1,6 @@
-export function ResearchVariantEditorial({ item, revealRef, isVisible }) {
+export function ResearchVariantEditorial({ item }) {
     return (
-        <article ref={revealRef} className={`research-section research-section--editorial reveal-slide-up${isVisible ? " is-visible" : ""}`}>
+        <article className="research-section research-section--editorial">
             <div className="research-section-head">
                 <p className="research-section-kicker">{item.eyebrow}</p>
                 <h3 className="research-section-title">{item.title}</h3>

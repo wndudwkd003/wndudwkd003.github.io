@@ -1,147 +1,314 @@
 {
     "sectionLabel": "Research Areas",
-    "title": "Research Areas",
-    "description": "A overview of my current research interests across autonomous driving, multi-agent systems, and data-centric AI.",
+    "title": "Research Overview",
+    "description": "This section briefly introduces my main research in artificial intelligence, including each topic, approach, and key results. Please visit the Publications page for further details.",
     "cta": {
-        "label": "Scroll to Research",
-        "hint": "See more details below."
+        "label": "View Projects",
+        "hint": "Explore the selected projects below."
     },
     "researchStoryBridges": [
         {
-            "id": "story-bridge-00",
-            "beforeItemId": "autonomous-driving-sensor-fusion",
-            "eyebrow": "Research Narrative",
-            "copy": "An unexpected but valuable opportunity first led me into autonomous driving, where I became interested in how perception and control actions can work together in real-world systems."
+            "id": "story-openvla-next-step",
+            "beforeItemId": "project-main-2-openvla",
+            "eyebrow": "Next Research Direction",
+            "copy": "I am currently exploring an architecture that combines compact VLA models with memory. The goal is to develop a lightweight VLA system that can use prior observations and action experience to make consistent decisions under limited computational resources."
         },
         {
-            "id": "story-bridge-01",
-            "afterItemId": "autonomous-driving-sensor-fusion",
-            "eyebrow": "Research Flow",
-            "copy": "Research in autonomous driving naturally drew my attention to AI and deep learning more broadly, and the rapid rise of LLMs further encouraged me to expand my research in that direction."
+            "id": "story-multi-agent-memory",
+            "beforeItemId": "project-main-1-multi-agent-ai",
+            "eyebrow": "Research Expansion",
+            "copy": "I initially studied how to reduce inference cost and latency by reusing agent reasoning and debate traces as memory for inappropriate utterance detection. I am now extending this work to culturally grounded tasks that combine personas with RAG."
         },
         {
-            "id": "story-bridge-02",
-            "afterItemId": "llm-multiagent-systems",
-            "eyebrow": "Next Question",
-            "copy": "As my interest in LLM systems, RAG, and efficient agent-based workflows grew, I became increasingly interested in studying these directions in the context of the manufacturing industry, together with broader data-centric AI topics such as missing data and data quality."
+            "id": "story-robust-predictive-maintenance",
+            "beforeItemId": "project-sub-2-missing-data",
+            "eyebrow": "Core Master's Research",
+            "copy": "To address missing sensor data in industrial settings, I studied MARFI with a focus on MNAR, where the missingness pattern itself is informative. I completed and submitted my master's thesis on MARFI's missingness-aware imputation and its application to predictive maintenance."
         },
         {
-            "id": "story-bridge-03",
-            "afterItemId": "missing-data-synthetic-data",
-            "eyebrow": "Looking Ahead",
-            "copy": "Looking ahead, I hope to keep refining these directions while also exploring emerging domains where reliable and practical AI systems can make a meaningful impact."
+            "id": "story-roboracer-experience",
+            "beforeItemId": "project-sub-1-roboracer",
+            "eyebrow": "RoboRacer",
+            "copy": "Through RoboRacer, we developed autonomous racing algorithms and systems in both simulation and physical-vehicle environments. We built the full driving pipeline, from sensor-based perception to path planning and vehicle control, and repeatedly validated it across different tracks and competition settings. Our work culminated in first place at the IV 2024 competition."
         }
     ],
     "items": [
         {
-            "id": "autonomous-driving-sensor-fusion",
+            "id": "project-main-1-multi-agent-ai",
+            "displayOrder": 3,
+            "kind": "project",
             "variant": "timeline",
-            "eyebrow": "Autonomous Driving / Sensor Fusion",
-            "title": "-",
-            "summary": "-",
-            "tags": ["-"],
+            "eyebrow": "LLM Systems / Multi-Agent Systems",
+            "title": "Context- and Memory-Aware LLM and Multi-Agent Systems",
+            "summary": "I study LLM systems and multi-agent systems that improve inference efficiency, knowledge retrieval, and the integration of personas and contextual information. The goal is to produce reliable and consistent outputs across diverse linguistic and cultural settings.",
+            "tags": ["LLM Systems", "Multi-Agent Systems", "Memory", "RAG", "Personas"],
             "media": {
-                "src": "awards/f1tenth-icra2024_2024-05-14/a7.gif",
-                "alt": "Autonomous driving demo placeholder"
+                "autoplayMs": 6500,
+                "items": [
+                    {
+                        "src": "projects/project_main_1/a1.jpg",
+                        "alt": "Reflective-memory and interventional context-alignment architecture",
+                        "fit": "contain",
+                        "theme": "light"
+                    },
+                    {
+                        "src": "projects/project_main_1/a2.png",
+                        "alt": "Embedding-space visualization for multi-agent context analysis",
+                        "fit": "contain",
+                        "theme": "light"
+                    },
+                    {
+                        "src": "projects/project_main_1/a3.png",
+                        "alt": "Experimental comparison of multi-agent LLM systems",
+                        "fit": "contain",
+                        "theme": "light"
+                    },
+                    {
+                        "src": "projects/project_main_1/a4.png",
+                        "alt": "Multimodal event extraction and completion framework",
+                        "fit": "contain",
+                        "theme": "light"
+                    },
+                    {
+                        "src": "projects/project_main_1/a5.jpg",
+                        "alt": "Adaptive multi-agent decision-support architecture",
+                        "fit": "contain",
+                        "theme": "light"
+                    }
+                ]
             },
             "metrics": [
                 {
-                    "label": "-",
-                    "value": "-"
+                    "label": "Period",
+                    "value": "2025 - Present"
                 },
                 {
-                    "label": "-",
-                    "value": "-"
-                },
-                {
-                    "label": "-",
-                    "value": "-"
+                    "label": "Status",
+                    "value": "Ongoing"
                 }
             ],
             "stages": [
                 {
-                    "title": "-",
-                    "copy": "-"
+                    "title": "Memory-Enabled Reasoning",
+                    "copy": "Agent reasoning and debate results are organized as reusable memory to reduce repetitive inference costs."
                 },
                 {
-                    "title": "-",
-                    "copy": "-"
+                    "title": "Retrieval-Augmented Context",
+                    "copy": "RAG retrieves external knowledge and cultural context relevant to a task and incorporates them into system responses."
                 },
                 {
-                    "title": "-",
-                    "copy": "-"
+                    "title": "Persona-Based Agent Design",
+                    "copy": "Agents with distinct roles and perspectives are designed to study judgment and response generation across linguistic and cultural settings."
                 }
             ],
             "links": []
         },
         {
-            "id": "llm-multiagent-systems",
-            "variant": "command-center",
-            "eyebrow": "LLM / Multi-Agent Systems",
-            "title": "-",
-            "summary": "-",
-            "tags": ["-"],
-            "panels": [
-                {
-                    "label": "-",
-                    "value": "-"
-                },
-                {
-                    "label": "-",
-                    "value": "-"
-                },
-                {
-                    "label": "-",
-                    "value": "-"
-                }
-            ],
-            "agents": [
-                {
-                    "name": "-",
-                    "role": "-",
-                    "state": "-"
-                },
-                {
-                    "name": "-",
-                    "role": "-",
-                    "state": "-"
-                },
-                {
-                    "name": "-",
-                    "role": "-",
-                    "state": "-"
-                }
-            ],
-            "messages": ["-", "-", "-"],
-            "links": []
-        },
-        {
-            "id": "missing-data-synthetic-data",
-            "variant": "editorial",
-            "eyebrow": "Missing Data / Synthetic Data",
-            "title": "-",
-            "summary": "-",
-            "tags": ["-"],
-            "callouts": [
-                {
-                    "title": "-",
-                    "copy": "-"
-                },
-                {
-                    "title": "-",
-                    "copy": "-"
-                },
-                {
-                    "title": "-",
-                    "copy": "-"
-                }
-            ],
-            "comparison": {
-                "leftLabel": "-",
-                "leftTitle": "-",
-                "rightLabel": "-",
-                "rightTitle": "-"
+            "id": "project-main-2-openvla",
+            "displayOrder": 4,
+            "kind": "project",
+            "variant": "timeline",
+            "eyebrow": "Vision-Language-Action / Mobile Manipulation",
+            "title": "Vision-Language-Action Research",
+            "summary": "This research combines simulation-based task generation, Vision-Language-Action learning, and robot control for industrial mobile-manipulation tasks. It is one of the central themes of my doctoral research, and detailed methods and results will be added as the work progresses.",
+            "tags": ["OpenVLA", "Mobile Manipulation", "Simulation"],
+            "media": {
+                "autoplayMs": 6500,
+                "items": [
+                    {
+                        "src": "projects/project_main_2/a1.webp",
+                        "alt": "OpenVLA mobile-manipulator object-handling demonstration"
+                    },
+                    {
+                        "src": "projects/project_main_2/a2.webp",
+                        "alt": "Parallel mobile-manipulation simulation environments"
+                    },
+                    {
+                        "src": "projects/project_main_2/a3.png",
+                        "alt": "OpenVLA project research roadmap",
+                        "fit": "contain",
+                        "theme": "light"
+                    },
+                    {
+                        "src": "projects/project_main_2/a4.png",
+                        "alt": "Mobile-manipulator simulation and data-collection pipeline",
+                        "fit": "contain",
+                        "theme": "light"
+                    }
+                ]
             },
+            "metrics": [
+                {
+                    "label": "Period",
+                    "value": "2025.09 - Present"
+                },
+                {
+                    "label": "Status",
+                    "value": "Ongoing"
+                }
+            ],
+            "stages": [
+                {
+                    "title": "Simulation and Task Generation",
+                    "copy": "Mobile-manipulation environments are built to collect task-level trajectories for object-handling operations."
+                },
+                {
+                    "title": "VLA Supervised Learning",
+                    "copy": "Models learn to connect language instructions and visual observations with predicted robot actions."
+                },
+                {
+                    "title": "Robustness and Sim-to-Real",
+                    "copy": "Domain randomization, reinforcement learning, and real-world adaptation are explored to improve system robustness."
+                }
+            ],
+            "links": []
+        },
+        {
+            "id": "project-sub-1-roboracer",
+            "displayOrder": 1,
+            "kind": "project",
+            "variant": "timeline",
+            "eyebrow": "RoboRacer / Autonomous Racing",
+            "title": "RoboRacer Autonomous Racing System",
+            "summary": "This project uses a 1/10-scale autonomous vehicle to perceive the driving environment and detect and track dynamic obstacles in real time. Racing-line planning and vehicle-control algorithms account for the motion of nearby vehicles and are validated in both simulation and physical racing environments.",
+            "tags": ["RoboRacer", "Autonomous Driving", "Obstacle Detection and Tracking", "Path Planning", "Vehicle Control"],
+            "media": {
+                "autoplayMs": 6500,
+                "items": [
+                    {
+                        "src": "projects/project_sub_1/a0.gif",
+                        "alt": "RoboRacer autonomous-racing demonstration 1"
+                    },
+                    {
+                        "src": "projects/project_sub_1/a1.webp",
+                        "alt": "RoboRacer autonomous-racing demonstration 2"
+                    },
+                    {
+                        "src": "projects/project_sub_1/a2.webp",
+                        "alt": "RoboRacer autonomous-racing demonstration 3"
+                    },
+                    {
+                        "src": "projects/project_sub_1/a3.webp",
+                        "alt": "RoboRacer autonomous-racing demonstration 4"
+                    },
+                    {
+                        "src": "projects/project_sub_1/a4.webp",
+                        "alt": "RoboRacer autonomous-racing demonstration 5"
+                    },
+                    {
+                        "src": "projects/project_sub_1/a5.webp",
+                        "alt": "RoboRacer autonomous-racing demonstration 6"
+                    }
+                ]
+            },
+            "metrics": [
+                {
+                    "label": "Period",
+                    "value": "2024 - 2025"
+                },
+                {
+                    "label": "Status",
+                    "value": "Completed"
+                }
+            ],
+            "stages": [
+                {
+                    "title": "Sensor-Based Track Perception",
+                    "copy": "LiDAR and vehicle-state data are used to identify track boundaries and estimate the current driving state."
+                },
+                {
+                    "title": "Real-Time Obstacle Detection and Tracking",
+                    "copy": "Sensor observations are used to detect nearby obstacles, track their motion over time, and assess collision risk."
+                },
+                {
+                    "title": "Racing-Line Planning and Control",
+                    "copy": "The track and nearby vehicles are considered when planning the racing line and generating steering and speed commands."
+                },
+                {
+                    "title": "Simulation and Physical-Vehicle Validation",
+                    "copy": "Algorithms are iteratively evaluated in simulation before their driving performance is validated on physical vehicles and in competition settings."
+                }
+            ],
+            "links": []
+        },
+        {
+            "id": "project-sub-2-missing-data",
+            "displayOrder": 2,
+            "kind": "project",
+            "variant": "timeline",
+            "eyebrow": "MNAR Missing Data / Predictive Maintenance",
+            "title": "MNAR-Aware Imputation for Robust Predictive Maintenance",
+            "summary": "This research focuses on MNAR settings in predictive-maintenance sensor data, where the missingness pattern itself is informative. MARFI analyzes missingness patterns and co-missing relationships, then learns the missingness mechanism through remasking and auxiliary mask prediction. It preserves observed values while reconstructing only missing positions and evaluates both distribution fidelity and downstream predictive-maintenance performance.",
+            "tags": ["MARFI", "MNAR", "Missingness-Aware Learning", "Remasking", "Rectified Flow", "Predictive Maintenance"],
+            "media": {
+                "autoplayMs": 6500,
+                "items": [
+                    {
+                        "src": "projects/project_sub_2/a1.png",
+                        "alt": "Missingness masks, feature correlations, and quantile profiles",
+                        "fit": "contain",
+                        "theme": "light"
+                    },
+                    {
+                        "src": "projects/project_sub_2/a2.png",
+                        "alt": "Mask-conditioned rectified-flow imputation architecture",
+                        "fit": "contain",
+                        "theme": "light"
+                    },
+                    {
+                        "src": "projects/project_sub_2/a3.png",
+                        "alt": "Imputation-error comparison across missingness mechanisms and ratios",
+                        "fit": "contain",
+                        "theme": "light"
+                    },
+                    {
+                        "src": "projects/project_sub_2/a4.png",
+                        "alt": "Comparison of reconstructed and ground-truth feature distributions",
+                        "fit": "contain",
+                        "theme": "light"
+                    },
+                    {
+                        "src": "projects/project_sub_2/a5.png",
+                        "alt": "Language-model-assisted classification architecture for missing sensor data",
+                        "fit": "contain",
+                        "theme": "light"
+                    },
+                    {
+                        "src": "projects/project_sub_2/a6.png",
+                        "alt": "Downstream prediction accuracy across missing-data scenarios",
+                        "fit": "contain",
+                        "theme": "light"
+                    }
+                ]
+            },
+            "metrics": [
+                {
+                    "label": "Period",
+                    "value": "2025 - 2026"
+                },
+                {
+                    "label": "Status",
+                    "value": "Completed"
+                }
+            ],
+            "stages": [
+                {
+                    "title": "MNAR Missingness Analysis",
+                    "copy": "Missingness masks, co-missing relationships across sensors, and value quantiles are analyzed to characterize non-random missingness associated with the data itself."
+                },
+                {
+                    "title": "Remasking-Based Mechanism Learning",
+                    "copy": "Remasking hides a subset of observed values to construct training signals, while auxiliary mask prediction learns missingness patterns embedded in the data."
+                },
+                {
+                    "title": "Mask-Conditioned Imputation",
+                    "copy": "A rectified-flow velocity field is conditioned on the missingness mask to reconstruct only missing sensor positions without modifying observed values."
+                },
+                {
+                    "title": "Distribution and Downstream Validation",
+                    "copy": "Reconstruction error and distribution fidelity are compared across missingness mechanisms and ratios, together with the effect of imputed data on equipment-state prediction."
+                }
+            ],
             "links": []
         }
     ]

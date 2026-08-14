@@ -1,6 +1,8 @@
-export function ResearchVariantTimeline({ item, mediaSrc, revealRef, isVisible }) {
+import { ResearchMediaCarousel } from "./ResearchMediaCarousel";
+
+export function ResearchVariantTimeline({ item, mediaItems }) {
     return (
-        <article ref={revealRef} className={`research-section research-section--timeline reveal-slide-up${isVisible ? " is-visible" : ""}`}>
+        <article className="research-section research-section--timeline">
             <div className="research-section-head">
                 <p className="research-section-kicker">{item.eyebrow}</p>
                 <h3 className="research-section-title">{item.title}</h3>
@@ -10,11 +12,7 @@ export function ResearchVariantTimeline({ item, mediaSrc, revealRef, isVisible }
             <div className="research-timeline-layout">
                 <div className="research-timeline-visual">
                     <div className="research-timeline-image-shell">
-                        {mediaSrc ? (
-                            <img src={mediaSrc} alt={item.media?.alt || item.title} className="research-timeline-image" />
-                        ) : (
-                            <div className="research-timeline-image-fallback">Motion demo</div>
-                        )}
+                        <ResearchMediaCarousel items={mediaItems} title={item.title} autoplayMs={item.media?.autoplayMs} />
                     </div>
 
                 <div className="research-timeline-metrics">

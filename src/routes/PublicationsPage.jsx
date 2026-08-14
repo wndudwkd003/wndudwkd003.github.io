@@ -1,7 +1,15 @@
 import { useMemo, useState } from "react";
 import { Layout } from "../components/layout/Layout";
+import { ResearchMediaCarousel } from "../components/home/research/ResearchMediaCarousel";
 import { publications } from "../data/publications";
 import siteText from "../data/siteText.json";
+import paperImages from "virtual:paper-images";
+
+const DEFAULT_DETAIL_LABELS = {
+    overview: "Research Overview",
+    contributions: "Role & Contributions",
+    materials: "Demo / Materials",
+};
 
 const CATEGORY_LABEL_MAP = {
     "국제 저널": "International Journals",
@@ -39,58 +47,130 @@ function renderBreakableText(value, italic = false) {
     return italic ? <em>{content}</em> : content;
 }
 
-function getPublicationDetails(publication) {
-    const details = publication.details || {};
+function getPublicationDetails(publication, folderDetails) {
+    const details = folderDetails || publication.details || {};
+    const materials = (paperImages[publication.id] || []).map((image) => ({
+        type: "image",
+        src: image.src,
+        thumbnailSrc: image.thumbnailSrc,
+        fit: "contain",
+    }));
 
     return {
         overview: String(details.overview || publication.description || "").trim(),
         contributions: Array.isArray(details.contributions)
             ? details.contributions.filter((item) => String(item || "").trim().length > 0)
             : [],
-        materials: Array.isArray(details.materials)
-            ? details.materials.filter(Boolean)
+        materials,
+        sections: Array.isArray(details.sections)
+            ? details.sections.filter(Boolean)
             : [],
+        labels: {
+            ...DEFAULT_DETAIL_LABELS,
+            ...(details.labels || {}),
+        },
     };
 }
 
-function getMaterialHref(material) {
-    return material?.url || material?.href || material?.src || "";
+function getPaperFolderUrl(folder, path = "") {
+    const baseUrl = String(import.meta.env.BASE_URL || "/").replace(/\/?$/, "/");
+    const safeFolder = encodeURIComponent(String(folder || "").trim());
+    const safePath = String(path || "")
+        .replace(/\\/g, "/")
+        .replace(/^\/+/, "")
+        .split("/")
+        .filter(Boolean)
+        .map(encodeURIComponent)
+        .join("/");
+
+    return `${baseUrl}papers/${safeFolder}/${safePath}`;
 }
 
-function MaterialItem({ material }) {
-    const href = getMaterialHref(material);
-    const label = String(material?.label || material?.title || material?.type || "Material").trim();
-    const type = String(material?.type || "").toLowerCase();
+async function loadPublicationDetails(publication) {
+    const folder = String(publication.id || "").trim();
+    if (!folder) return null;
 
-    if (!href) return null;
+    const response = await fetch(getPaperFolderUrl(folder, "details.json"));
+    if (response.status === 404) return null;
+    if (!response.ok) throw new Error(`Unable to load publication details (${response.status})`);
 
-    if (type === "image" || type === "gif") {
-        return (
-            <figure className="pub-material-frame">
-                <img className="pub-material-image" src={href} alt={label} loading="lazy" />
-            </figure>
-        );
+    return {
+        data: await response.json(),
+        folder,
+    };
+}
+
+function getMaterialHref(material, folder) {
+    const path = material?.url || material?.href || material?.src || "";
+    if (!path) return "";
+
+    const normalized = String(path).replace(/\\/g, "/").trim();
+    if (/^(?:https?:|data:|blob:)/i.test(normalized) || normalized.startsWith("/")) return normalized;
+
+    if (normalized.startsWith("public/")) {
+        const baseUrl = String(import.meta.env.BASE_URL || "/").replace(/\/?$/, "/");
+        return `${baseUrl}${normalized.slice("public/".length)}`;
     }
 
-    if (type === "video") {
-        return (
-            <figure className="pub-material-frame">
-                <video className="pub-material-video" src={href} controls preload="metadata" />
-            </figure>
-        );
-    }
+    return getPaperFolderUrl(folder, normalized);
+}
+
+function PublicationDetailSection({ section, publicationId, index }) {
+    const title = String(section?.title || section?.heading || "").trim();
+    const paragraphs = Array.isArray(section?.paragraphs)
+        ? section.paragraphs.filter((paragraph) => String(paragraph || "").trim())
+        : section?.body
+          ? [section.body]
+          : [];
+    const bullets = Array.isArray(section?.bullets)
+        ? section.bullets.filter((bullet) => String(bullet || "").trim())
+        : [];
+
+    if (!title && paragraphs.length === 0 && bullets.length === 0) return null;
 
     return (
-        <a href={href} target="_blank" rel="noreferrer" className="pub-material-link">
-            {label}
-        </a>
+        <section className="pub-detail-section">
+            {title ? <h4 className="pub-detail-heading">{title}</h4> : null}
+            {paragraphs.map((paragraph, paragraphIndex) => (
+                <p key={`${publicationId}-section-${index}-paragraph-${paragraphIndex}`} className="project-card-summary">
+                    {paragraph}
+                </p>
+            ))}
+            {bullets.length > 0 ? (
+                <ul className="pub-detail-list">
+                    {bullets.map((bullet, bulletIndex) => (
+                        <li key={`${publicationId}-section-${index}-bullet-${bulletIndex}`}>{bullet}</li>
+                    ))}
+                </ul>
+            ) : null}
+        </section>
     );
 }
 
 function PublicationItem({ publication }) {
     const [isOpen, setIsOpen] = useState(false);
+    const [folderDetails, setFolderDetails] = useState(null);
+    const [detailStatus, setDetailStatus] = useState("idle");
     const panelId = `publication-panel-${publication.id}`;
-    const details = getPublicationDetails(publication);
+    const details = getPublicationDetails(publication, folderDetails?.data);
+    const detailFolder = folderDetails?.folder || publication.id;
+
+    const toggleDetails = () => {
+        const opening = !isOpen;
+        setIsOpen(opening);
+
+        if (!opening || detailStatus !== "idle") return;
+
+        setDetailStatus("loading");
+        loadPublicationDetails(publication)
+            .then((result) => {
+                setFolderDetails(result);
+                setDetailStatus(result ? "loaded" : "missing");
+            })
+            .catch(() => {
+                setDetailStatus("error");
+            });
+    };
 
     return (
         <li className={`pub-item pub-accordion-item${isOpen ? " is-open" : ""}`}>
@@ -99,7 +179,7 @@ function PublicationItem({ publication }) {
                 className="pub-item-trigger"
                 aria-expanded={isOpen}
                 aria-controls={panelId}
-                onClick={() => setIsOpen((prev) => !prev)}
+                onClick={toggleDetails}
             >
                 <div className="pub-item-title-row">
                     <div className="pub-item-title-group">
@@ -177,48 +257,72 @@ function PublicationItem({ publication }) {
 
             <div id={panelId} className="pub-accordion-panel">
                 <div className="pub-accordion-panel-inner">
-                    <div className="project-card pub-detail-card">
-                        <section className="pub-detail-section">
-                            <h4 className="pub-detail-heading">Research Overview</h4>
-                            {details.overview ? (
-                                <p className="project-card-summary">{details.overview}</p>
-                            ) : (
-                                <p className="pub-detail-placeholder">A short research overview will be added later.</p>
-                            )}
-                        </section>
+                    {detailStatus === "loading" ? (
+                        <p className="pub-detail-loading">Loading publication details...</p>
+                    ) : (
+                        <div className="project-card pub-detail-card">
+                            <section className="pub-detail-section">
+                                <h4 className="pub-detail-heading">{details.labels.overview}</h4>
+                                {details.overview ? (
+                                    <p className="project-card-summary">{details.overview}</p>
+                                ) : (
+                                    <p className="pub-detail-placeholder">A short research overview will be added later.</p>
+                                )}
+                            </section>
 
-                        <section className="pub-detail-section">
-                            <h4 className="pub-detail-heading">Role & Contributions</h4>
+                            <section className="pub-detail-section">
+                                <h4 className="pub-detail-heading">{details.labels.contributions}</h4>
 
-                            {details.contributions.length > 0 ? (
-                                <ul className="pub-detail-list">
-                                    {details.contributions.map((item, index) => (
-                                        <li key={`${publication.id}-contribution-${index}`}>{item}</li>
-                                    ))}
-                                </ul>
-                            ) : (
-                                <p className="pub-detail-placeholder">
-                                    Role and contributions will be added later.
-                                </p>
-                            )}
-                        </section>
+                                {details.contributions.length > 0 ? (
+                                    <ul className="pub-detail-list">
+                                        {details.contributions.map((item, index) => (
+                                            <li key={`${publication.id}-contribution-${index}`}>{item}</li>
+                                        ))}
+                                    </ul>
+                                ) : (
+                                    <p className="pub-detail-placeholder">
+                                        Role and contributions will be added later.
+                                    </p>
+                                )}
+                            </section>
 
-                        <section className="pub-detail-section">
-                            <h4 className="pub-detail-heading">Demo / Materials</h4>
+                            {details.sections.map((section, index) => (
+                                <PublicationDetailSection
+                                    key={`${publication.id}-section-${index}`}
+                                    section={section}
+                                    publicationId={publication.id}
+                                    index={index}
+                                />
+                            ))}
 
-                            {details.materials.length > 0 ? (
-                                <div className="pub-material-grid">
-                                    {details.materials.map((material, index) => (
-                                        <MaterialItem key={`${publication.id}-material-${index}`} material={material} />
-                                    ))}
-                                </div>
-                            ) : (
-                                <p className="pub-detail-placeholder">
-                                    Demo, media, or presentation materials will be added later.
-                                </p>
-                            )}
-                        </section>
-                    </div>
+                            <section className="pub-detail-section">
+                                <h4 className="pub-detail-heading">{details.labels.materials}</h4>
+
+                                {details.materials.length > 0 ? (
+                                    <div className="pub-material-carousel">
+                                        <ResearchMediaCarousel
+                                            title={publication.title}
+                                            autoplayMs={6500}
+                                            items={details.materials.map((material, index) => ({
+                                                src: getMaterialHref(
+                                                    { src: material.thumbnailSrc || material.src },
+                                                    detailFolder,
+                                                ),
+                                                fallbackSrc: getMaterialHref({ src: material.src }, detailFolder),
+                                                alt: `${publication.title} figure ${index + 1}`,
+                                                fit: "contain",
+                                                theme: "light",
+                                            }))}
+                                        />
+                                    </div>
+                                ) : (
+                                    <p className="pub-detail-placeholder">
+                                        Demo, media, or presentation materials will be added later.
+                                    </p>
+                                )}
+                            </section>
+                        </div>
+                    )}
                 </div>
             </div>
         </li>

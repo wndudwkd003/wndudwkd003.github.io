@@ -10,6 +10,10 @@ export function Layout({ children }) {
     const visibleNavItems = siteConfig.navItems.filter((item) => item.path !== "/projects");
 
     useEffect(() => {
+        window.scrollTo({ top: 0, left: 0, behavior: "auto" });
+    }, [location.pathname]);
+
+    useEffect(() => {
         const handleScroll = () => {
             setShowScrollTop(window.scrollY > 280);
         };
@@ -49,7 +53,7 @@ export function Layout({ children }) {
                                         key={item.path}
                                         to={item.path}
                                         className={`app-nav-link${isActive ? " is-active" : ""}`}
-                                        onClick={item.path === "/" ? scrollToTop : undefined}
+                                        onClick={scrollToTop}
                                     >
                                         <span className="app-nav-index">{String(index + 1).padStart(2, "0")}</span>
                                         <span>{item.label}</span>

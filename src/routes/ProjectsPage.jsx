@@ -18,7 +18,11 @@ function getProjectStartValue(period) {
 
 export function ProjectsPage() {
     const sortedProjects = useMemo(() => {
-        return [...projects].sort((a, b) => getProjectStartValue(b.period) - getProjectStartValue(a.period));
+        return [...projects].sort((a, b) => {
+            if (a.id === "project_1") return 1;
+            if (b.id === "project_1") return -1;
+            return getProjectStartValue(b.period) - getProjectStartValue(a.period);
+        });
     }, []);
 
     const groupedProjects = useMemo(() => {
