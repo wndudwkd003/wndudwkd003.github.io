@@ -4,9 +4,9 @@
 
 - Activities keep the existing behavior: original width and quality 70.
 - Publications preserve the original aspect ratio, resize to a maximum width of 1080 pixels, and use quality 84.
-- Projects process PNG/JPG/JPEG files at a maximum width of 1080 pixels and quality 100.
+- Projects process PNG/JPG/JPEG/GIF files at a maximum width of 1080 pixels and quality 100. Animated GIF files are written as animated WebP thumbnails.
 - Animated WebP files preserve their original frame durations. Projects use a maximum width of 720 pixels; Activities and Publications use 1080 pixels. The default quality is 100 and can be adjusted with `--animated-webp-quality` without changing the animation timing.
-- Project GIF files and non-animated project WebP files are left untouched by the animated-media rule.
+- Non-animated project WebP files are left untouched by the animated-media rule.
 
 ## Install
 
@@ -26,6 +26,12 @@ Run only one profile:
 python python-scripts/generate_thumbnails.py --scope activities
 python python-scripts/generate_thumbnails.py --scope publications
 python python-scripts/generate_thumbnails.py --scope projects
+```
+
+Target one project directory and use custom settings for both animated WebP and GIF sources:
+
+```bash
+python python-scripts/generate_thumbnails.py --scope projects --projects-dir public/projects/project_sub_1 --projects-max-width 500 --projects-quality 50 --projects-animated-webp-max-width 500 --animated-webp-quality 50 --animated-webp-method 6 --overwrite
 ```
 
 Adjust only the animated WebP quality while preserving its original frame timing:

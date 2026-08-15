@@ -15,7 +15,7 @@ ROOT_DIR = Path(__file__).resolve().parent.parent
 DEFAULT_ACTIVITIES_DIR = ROOT_DIR / "public" / "awards"
 DEFAULT_PUBLICATIONS_DIR = ROOT_DIR / "public" / "papers"
 DEFAULT_PROJECTS_DIR = ROOT_DIR / "public" / "projects"
-PROJECT_SOURCE_EXTENSIONS = {".jpg", ".jpeg", ".png"}
+PROJECT_SOURCE_EXTENSIONS = {".jpg", ".jpeg", ".png", ".gif"}
 
 
 @dataclass(frozen=True)
