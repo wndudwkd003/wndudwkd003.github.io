@@ -30,7 +30,7 @@ function normalizePublicAsset(path) {
 function getProjectThumbnailAsset(src) {
     if (!src.startsWith("/projects/")) return "";
 
-    const match = src.match(/^(.*\/)([^/]+)\.(?:jpe?g|png)$/i);
+    const match = src.match(/^(.*\/)([^/]+)\.(?:jpe?g|png|webp)$/i);
     if (!match) return "";
 
     return `${match[1]}thumbnail/${match[2]}.webp`;

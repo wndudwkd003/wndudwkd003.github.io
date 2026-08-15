@@ -1,39 +1,14 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 
-const DEFAULT_AUTOPLAY_MS = 6500;
-
-export function ResearchMediaCarousel({ items, title, autoplayMs = DEFAULT_AUTOPLAY_MS }) {
+export function ResearchMediaCarousel({ items, title }) {
     const carouselRef = useRef(null);
     const preloadersRef = useRef([]);
     const preloadedSourcesRef = useRef(new Set());
     const [activeIndex, setActiveIndex] = useState(0);
     const [isLoaded, setIsLoaded] = useState(false);
-    const [isInView, setIsInView] = useState(() => typeof IntersectionObserver === "undefined");
     const [shouldPreload, setShouldPreload] = useState(() => typeof IntersectionObserver === "undefined");
-    const [isPaused, setIsPaused] = useState(false);
-    const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
     const mediaItems = useMemo(() => (Array.isArray(items) ? items : []), [items]);
     const mediaCount = mediaItems.length;
-
-    useEffect(() => {
-        const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-        const updatePreference = () => setPrefersReducedMotion(mediaQuery.matches);
-        updatePreference();
-        mediaQuery.addEventListener("change", updatePreference);
-        return () => mediaQuery.removeEventListener("change", updatePreference);
-    }, []);
-
-    useEffect(() => {
-        const node = carouselRef.current;
-        if (!node || typeof IntersectionObserver === "undefined") return undefined;
-
-        const observer = new IntersectionObserver(
-            ([entry]) => setIsInView(entry.isIntersecting),
-            { threshold: 0.35 },
-        );
-        observer.observe(node);
-        return () => observer.disconnect();
-    }, []);
 
     useEffect(() => {
         const node = carouselRef.current;
@@ -71,19 +46,6 @@ export function ResearchMediaCarousel({ items, title, autoplayMs = DEFAULT_AUTOP
         }
     }, [activeIndex, mediaCount, mediaItems, shouldPreload]);
 
-    useEffect(() => {
-        if (mediaCount <= 1 || isPaused || !isInView || prefersReducedMotion || document.hidden) {
-            return undefined;
-        }
-
-        const timer = window.setTimeout(() => {
-            setIsLoaded(false);
-            setActiveIndex((current) => (current + 1) % mediaCount);
-        }, autoplayMs);
-
-        return () => window.clearTimeout(timer);
-    }, [activeIndex, autoplayMs, isInView, isPaused, mediaCount, prefersReducedMotion]);
-
     if (mediaCount === 0) {
         return <div className="research-timeline-image-fallback">Media unavailable</div>;
     }
@@ -113,12 +75,6 @@ export function ResearchMediaCarousel({ items, title, autoplayMs = DEFAULT_AUTOP
             aria-label={`${title} media gallery`}
             aria-busy={!isLoaded}
             tabIndex={0}
-            onMouseEnter={() => setIsPaused(true)}
-            onMouseLeave={() => setIsPaused(false)}
-            onFocusCapture={() => setIsPaused(true)}
-            onBlurCapture={(event) => {
-                if (!event.currentTarget.contains(event.relatedTarget)) setIsPaused(false);
-            }}
             onKeyDown={(event) => {
                 if (event.key === "ArrowLeft") {
                     event.preventDefault();

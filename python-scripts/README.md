@@ -4,7 +4,9 @@
 
 - Activities keep the existing behavior: original width and quality 70.
 - Publications preserve the original aspect ratio, resize to a maximum width of 1080 pixels, and use quality 84.
-- Projects process only PNG/JPG/JPEG files at a maximum width of 1080 pixels and quality 100. GIF and WebP sources are left untouched.
+- Projects process PNG/JPG/JPEG files at a maximum width of 1080 pixels and quality 100.
+- Animated WebP files preserve their original frame durations. Projects use a maximum width of 720 pixels; Activities and Publications use 1080 pixels. The default quality is 100 and can be adjusted with `--animated-webp-quality` without changing the animation timing.
+- Project GIF files and non-animated project WebP files are left untouched by the animated-media rule.
 
 ## Install
 
@@ -25,6 +27,16 @@ python python-scripts/generate_thumbnails.py --scope activities
 python python-scripts/generate_thumbnails.py --scope publications
 python python-scripts/generate_thumbnails.py --scope projects
 ```
+
+Adjust only the animated WebP quality while preserving its original frame timing:
+
+```bash
+python python-scripts/generate_thumbnails.py --scope projects --animated-webp-only --animated-webp-quality 90 --animated-webp-method 3 --overwrite
+```
+
+The command processes one file at a time because animated WebP encoding keeps many decoded frames in memory. The overall progress bar counts only files that will actually be processed, while the active file has its own frame progress bar. After frame preparation reaches 100%, that bar changes to an `encoding q{quality}` state during Pillow's final WebP encoding pass.
+
+Each completed file prints its original size, thumbnail size, and reduction percentage. A combined size summary is printed after all files in the selected profile finish. If re-encoding makes a file larger, the result is reported as `increased` instead of `reduced`.
 
 Optional:
 

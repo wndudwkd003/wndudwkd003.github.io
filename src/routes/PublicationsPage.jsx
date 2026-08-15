@@ -302,7 +302,6 @@ function PublicationItem({ publication }) {
                                     <div className="pub-material-carousel">
                                         <ResearchMediaCarousel
                                             title={publication.title}
-                                            autoplayMs={6500}
                                             items={details.materials.map((material, index) => ({
                                                 src: getMaterialHref(
                                                     { src: material.thumbnailSrc || material.src },

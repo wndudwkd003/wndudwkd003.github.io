@@ -12,7 +12,7 @@ export function ResearchVariantTimeline({ item, mediaItems }) {
             <div className="research-timeline-layout">
                 <div className="research-timeline-visual">
                     <div className="research-timeline-image-shell">
-                        <ResearchMediaCarousel items={mediaItems} title={item.title} autoplayMs={item.media?.autoplayMs} />
+                        <ResearchMediaCarousel items={mediaItems} title={item.title} />
                     </div>
 
                 <div className="research-timeline-metrics">

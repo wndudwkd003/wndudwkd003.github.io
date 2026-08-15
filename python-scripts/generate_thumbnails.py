@@ -25,11 +25,29 @@ class ThumbnailProfile:
     max_width: int | None
     quality: int
     source_extensions: frozenset[str]
+    animated_webp_max_width: int
+
+
+@dataclass(frozen=True)
+class ThumbnailTask:
+    source_path: Path
+    target_path: Path
+    output_format: str
+    max_width: int | None
+    quality: int
+    webp_method: int
+
+
+@dataclass(frozen=True)
+class ThumbnailResult:
+    target_path: Path
+    original_size: int
+    thumbnail_size: int
 
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description="Create missing thumbnails for activities and publication figures."
+        description="Create missing thumbnails for activities, publications, and projects."
     )
     parser.add_argument(
         "--scope",
@@ -82,6 +100,37 @@ def parse_args() -> argparse.Namespace:
         help="Project JPG/WEBP quality. Default: 100",
     )
     parser.add_argument(
+        "--projects-animated-webp-max-width",
+        type=int,
+        default=720,
+        help="Maximum project animated-WebP thumbnail width. Default: 720",
+    )
+    parser.add_argument(
+        "--other-animated-webp-max-width",
+        type=int,
+        default=1080,
+        help="Maximum activities/publications animated-WebP thumbnail width. Default: 1080",
+    )
+    parser.add_argument(
+        "--animated-webp-quality",
+        type=int,
+        default=100,
+        help="Animated WebP quality. Frame timing is always preserved. Default: 100",
+    )
+    parser.add_argument(
+        "--animated-webp-method",
+        type=int,
+        choices=range(0, 7),
+        default=3,
+        metavar="{0..6}",
+        help="Animated WebP compression effort from 0 (fastest) to 6 (slowest). Default: 3",
+    )
+    parser.add_argument(
+        "--animated-webp-only",
+        action="store_true",
+        help="Process only animated WebP sources in the selected scope.",
+    )
+    parser.add_argument(
         "--format",
         choices=("jpg", "webp", "png"),
         default=DEFAULT_FORMAT,
@@ -122,6 +171,15 @@ def thumbnail_path_for_format(source_path: Path, output_format: str) -> Path:
     return source_path.parent / THUMBNAIL_DIRNAME / f"{source_path.stem}.{output_format}"
 
 
+def is_animated_webp(source_path: Path) -> bool:
+    if source_path.suffix.lower() != ".webp":
+        return False
+
+    Image, _, _ = load_pillow()
+    with Image.open(source_path) as image:
+        return image.format == "WEBP" and getattr(image, "is_animated", False)
+
+
 @lru_cache(maxsize=1)
 def load_pillow():
     try:
@@ -133,6 +191,19 @@ def load_pillow():
         ) from error
 
     return Image, ImageOps, ImageSequence
+
+
+@lru_cache(maxsize=1)
+def load_tqdm():
+    try:
+        from tqdm import tqdm
+    except ImportError as error:
+        raise SystemExit(
+            "tqdm is required. Install it with "
+            "`python -m pip install -r python-scripts/requirements.txt`."
+        ) from error
+
+    return tqdm
 
 
 def normalize_for_save(image, output_format: str, image_module):
@@ -186,6 +257,7 @@ def save_thumbnail(
     output_format: str,
     max_width: int | None,
     quality: int,
+    animated_webp_method: int = 3,
 ) -> None:
     Image, ImageOps, ImageSequence = load_pillow()
 
@@ -197,35 +269,53 @@ def save_thumbnail(
         )
 
         if preserve_animation:
+            tqdm = load_tqdm()
             frames = []
             durations = []
             loop = original.info.get("loop", 0)
             default_duration = original.info.get("duration", 100)
-
-            for frame in ImageSequence.Iterator(original):
-                current_frame = frame.copy()
-                current_frame = transpose_if_needed(current_frame, source_path, ImageOps)
-                current_frame = resize_if_needed(current_frame, max_width, Image)
-                current_frame = normalize_for_save(current_frame, output_format, Image)
-                frames.append(current_frame)
-                durations.append(frame.info.get("duration", default_duration))
-
-            if not frames:
-                return
-
-            target_path.parent.mkdir(parents=True, exist_ok=True)
-            frames[0].save(
-                target_path,
-                format="WEBP",
-                save_all=True,
-                append_images=frames[1:],
-                duration=durations,
-                loop=loop,
-                optimize=True,
-                quality=quality,
-                method=6,
+            progress_label = f"{source_path.parent.name}/{source_path.name}"
+            frame_progress = tqdm(
+                total=getattr(original, "n_frames", None),
+                desc=progress_label,
+                unit="frame",
+                leave=False,
+                dynamic_ncols=True,
+                position=1,
             )
-            return
+
+            try:
+                for frame in ImageSequence.Iterator(original):
+                    current_frame = frame.copy()
+                    current_frame = transpose_if_needed(current_frame, source_path, ImageOps)
+                    current_frame = resize_if_needed(current_frame, max_width, Image)
+                    current_frame = normalize_for_save(current_frame, output_format, Image)
+                    frames.append(current_frame)
+                    durations.append(frame.info.get("duration", default_duration))
+                    frame_progress.update(1)
+
+                if not frames:
+                    return
+
+                frame_progress.set_description_str(
+                    f"{progress_label} encoding q{quality} m{animated_webp_method}"
+                )
+                frame_progress.refresh()
+                target_path.parent.mkdir(parents=True, exist_ok=True)
+                frames[0].save(
+                    target_path,
+                    format="WEBP",
+                    save_all=True,
+                    append_images=frames[1:],
+                    duration=durations,
+                    loop=loop,
+                    optimize=True,
+                    quality=quality,
+                    method=animated_webp_method,
+                )
+                return
+            finally:
+                frame_progress.close()
 
         if getattr(original, "is_animated", False):
             frame = next(ImageSequence.Iterator(original)).copy()
@@ -260,10 +350,38 @@ def remove_stale_thumbnails(target_path: Path) -> None:
             stale_path.unlink()
 
 
+def format_file_size(size_bytes: int) -> str:
+    size = float(size_bytes)
+    for unit in ("B", "KB", "MB", "GB"):
+        if size < 1024 or unit == "GB":
+            return f"{size:.1f} {unit}"
+        size /= 1024
+
+    return f"{size_bytes} B"
+
+
+def format_size_change(original_size: int, thumbnail_size: int) -> str:
+    if original_size <= 0:
+        return "change unavailable"
+
+    change_percent = (1 - thumbnail_size / original_size) * 100
+    if change_percent >= 0:
+        return f"reduced {change_percent:.1f}%"
+
+    return f"increased {abs(change_percent):.1f}%"
+
+
 def build_profiles(args: argparse.Namespace) -> list[ThumbnailProfile]:
     profiles = [
         # Preserve the existing Activities behavior: no default resize and quality 70.
-        ThumbnailProfile("activities", args.activities_dir.resolve(), None, 70, frozenset(SUPPORTED_EXTENSIONS)),
+        ThumbnailProfile(
+            "activities",
+            args.activities_dir.resolve(),
+            None,
+            70,
+            frozenset(SUPPORTED_EXTENSIONS),
+            args.other_animated_webp_max_width,
+        ),
         # Publication figures retain their aspect ratio at a maximum width of 1080.
         ThumbnailProfile(
             "publications",
@@ -271,6 +389,7 @@ def build_profiles(args: argparse.Namespace) -> list[ThumbnailProfile]:
             args.publications_max_width,
             args.publications_quality,
             frozenset(SUPPORTED_EXTENSIONS),
+            args.other_animated_webp_max_width,
         ),
         # Project thumbnails are only created for static PNG/JPG sources.
         ThumbnailProfile(
@@ -278,7 +397,8 @@ def build_profiles(args: argparse.Namespace) -> list[ThumbnailProfile]:
             args.projects_dir.resolve(),
             args.projects_max_width,
             args.projects_quality,
-            frozenset(PROJECT_SOURCE_EXTENSIONS),
+            frozenset(PROJECT_SOURCE_EXTENSIONS | {".webp"}),
+            args.projects_animated_webp_max_width,
         ),
     ]
 
@@ -290,9 +410,63 @@ def build_profiles(args: argparse.Namespace) -> list[ThumbnailProfile]:
             args.max_width if args.max_width is not None else profile.max_width,
             args.quality if args.quality is not None else profile.quality,
             profile.source_extensions,
+            profile.animated_webp_max_width,
         )
         for profile in selected
     ]
+
+
+def process_thumbnail_task(task: ThumbnailTask) -> ThumbnailResult:
+    original_size = task.source_path.stat().st_size
+    save_thumbnail(
+        task.source_path,
+        task.target_path,
+        task.output_format,
+        task.max_width,
+        task.quality,
+        animated_webp_method=task.webp_method,
+    )
+    remove_stale_thumbnails(task.target_path)
+    return ThumbnailResult(
+        target_path=task.target_path,
+        original_size=original_size,
+        thumbnail_size=task.target_path.stat().st_size,
+    )
+
+
+def prepare_tasks(profile: ThumbnailProfile, args: argparse.Namespace) -> tuple[list[ThumbnailTask], int, int]:
+    tasks = []
+    skipped = 0
+    ignored = 0
+
+    for source_path in iter_source_images(profile.root_dir, profile.source_extensions):
+        animated_webp = is_animated_webp(source_path)
+        if args.animated_webp_only and not animated_webp:
+            ignored += 1
+            continue
+        if profile.name == "projects" and source_path.suffix.lower() == ".webp" and not animated_webp:
+            ignored += 1
+            continue
+
+        output_format = "webp" if animated_webp else args.format
+        target_path = thumbnail_path_for_format(source_path, output_format)
+        if target_path.exists() and not args.overwrite:
+            remove_stale_thumbnails(target_path)
+            skipped += 1
+            continue
+
+        tasks.append(
+            ThumbnailTask(
+                source_path=source_path,
+                target_path=target_path,
+                output_format=output_format,
+                max_width=profile.animated_webp_max_width if animated_webp else profile.max_width,
+                quality=args.animated_webp_quality if animated_webp else profile.quality,
+                webp_method=args.animated_webp_method if animated_webp else 6,
+            )
+        )
+
+    return tasks, skipped, ignored
 
 
 def generate_for_profile(profile: ThumbnailProfile, args: argparse.Namespace) -> tuple[int, int]:
@@ -300,27 +474,54 @@ def generate_for_profile(profile: ThumbnailProfile, args: argparse.Namespace) ->
         print(f"[{profile.name}] No directory found at {profile.root_dir}. Skipping.")
         return 0, 0
 
-    created = 0
-    skipped = 0
     print(
         f"[{profile.name}] root={profile.root_dir.relative_to(ROOT_DIR)}, "
-        f"format={args.format}, max_width={profile.max_width}, quality={profile.quality}"
+        f"static=(format={args.format}, max_width={profile.max_width}, quality={profile.quality}), "
+        f"animated_webp=(max_width={profile.animated_webp_max_width}, "
+        f"quality={args.animated_webp_quality}, method={args.animated_webp_method}, "
+        f"timing=preserved)"
+    )
+    tasks, skipped, ignored = prepare_tasks(profile, args)
+    created = 0
+    total_original_size = 0
+    total_thumbnail_size = 0
+
+    if not tasks:
+        print(f"[{profile.name}] complete. Created: 0, skipped: {skipped}, ignored: {ignored}")
+        return 0, skipped
+
+    tqdm = load_tqdm()
+    progress = tqdm(
+        total=len(tasks),
+        desc=f"{profile.name} thumbnails",
+        unit="file",
+        dynamic_ncols=True,
+        position=0,
     )
 
-    for source_path in iter_source_images(profile.root_dir, profile.source_extensions):
-        target_path = thumbnail_path_for_format(source_path, args.format)
-
-        if target_path.exists() and not args.overwrite:
-            remove_stale_thumbnails(target_path)
-            skipped += 1
-            continue
-
-        save_thumbnail(source_path, target_path, args.format, profile.max_width, profile.quality)
-        remove_stale_thumbnails(target_path)
+    for task in tasks:
+        result = process_thumbnail_task(task)
         created += 1
-        print(f"Created thumbnail: {target_path.relative_to(ROOT_DIR)}")
+        total_original_size += result.original_size
+        total_thumbnail_size += result.thumbnail_size
+        progress.update(1)
+        progress.set_postfix(created=created, skipped=skipped, ignored=ignored)
+        progress.write(
+            f"Created thumbnail: {result.target_path.relative_to(ROOT_DIR)} | "
+            f"{format_file_size(result.original_size)} -> "
+            f"{format_file_size(result.thumbnail_size)} | "
+            f"{format_size_change(result.original_size, result.thumbnail_size)}"
+        )
 
-    print(f"[{profile.name}] complete. Created: {created}, skipped: {skipped}")
+    progress.close()
+    if created > 0:
+        print(
+            f"[{profile.name}] size summary: "
+            f"{format_file_size(total_original_size)} -> "
+            f"{format_file_size(total_thumbnail_size)} | "
+            f"{format_size_change(total_original_size, total_thumbnail_size)}"
+        )
+    print(f"[{profile.name}] complete. Created: {created}, skipped: {skipped}, ignored: {ignored}")
     return created, skipped
 
 
@@ -333,10 +534,17 @@ def main() -> int:
         raise SystemExit("--publications-max-width must be greater than 0.")
     if args.projects_max_width <= 0:
         raise SystemExit("--projects-max-width must be greater than 0.")
+    if args.projects_animated_webp_max_width <= 0 or args.other_animated_webp_max_width <= 0:
+        raise SystemExit("Animated WebP max-width values must be greater than 0.")
 
     qualities = [
         value
-        for value in (args.quality, args.publications_quality, args.projects_quality)
+        for value in (
+            args.quality,
+            args.publications_quality,
+            args.projects_quality,
+            args.animated_webp_quality,
+        )
         if value is not None
     ]
     if any(value < 1 or value > 100 for value in qualities):
