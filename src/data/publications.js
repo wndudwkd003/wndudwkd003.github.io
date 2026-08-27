@@ -8,7 +8,7 @@ export const publications = [
         id: "int-journal-2026-001",
         category: "국제 저널",
         title: "MARFI: Missingness-Aware Rectified-Flow Imputation for MNAR Data in Predictive Maintenance",
-        venue: "IEEE Access",
+        venue: "IEEE Access, vol. 14, 2026",
         date: "2026-08-05",
         authors: "Juyoung Kim, Ji-Hong Park, Sang-Min Choi and Gun-Woo Kim",
         note: "(SCIE, IF: 4.2)",
