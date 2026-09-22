@@ -171,6 +171,18 @@ export const awards = [
     },
 
     {
+        id: "KCC2024",
+        title: "한국컴퓨터종합학술대회(KCC 2024) 학회 논문 발표",
+        org: "한국정보과학회",
+        date: "2024-06-26",
+        description: "한국정보과학회 한국컴퓨터종합학술대회(KCC 2024) 학회 논문 발표 및 장려상 수상",
+        tags: ["학술대회"],
+
+        images: { count: 8 },
+        downloads: [{ type: "pdf", file: "상장파일.pdf", down: true }],
+    },
+
+    {
         id: "f1tenth-iv2024_2024-06-05",
         title: "F1 Tenth Autonomous Racing Competition IV 2024 Race Winner 1st Place",
         org: "F1Tenth, The IEEE Intelligent Vehicles Symposium (IV) Jeju Korea",

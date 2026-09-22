@@ -18,7 +18,16 @@ export const publications = [
     // =========================
     // 국제 학회
     // =========================
-
+    {
+        id: "int-conf-2026-12-14",
+        category: "국제 학회",
+        title: "CALIMAP: Plug-and-Play Query Adaptation for Robust Vectorized HD Map Construction",
+        venue: "18th Asian Conference on Computer Vision (ACCV 2026)",
+        date: "2026-12-14",
+        authors: "Juyoung Kim, Ji-Hong Park, Sang-Min Choi and Gun-Woo Kim",
+        note: "",
+        url: "",
+    },
     {
         id: "int-conf-2026-04-04",
         category: "국제 학회",
