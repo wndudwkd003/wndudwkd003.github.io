@@ -25,7 +25,7 @@ export const publications = [
         venue: "18th Asian Conference on Computer Vision (ACCV 2026)",
         date: "2026-12-14",
         authors: "Juyoung Kim, Ji-Hong Park, Sang-Min Choi and Gun-Woo Kim",
-        note: "",
+        note: "(BK21 CS 분야 우수학술대회)",
         url: "",
     },
     {
