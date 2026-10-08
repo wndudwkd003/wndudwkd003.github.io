@@ -64,7 +64,7 @@ export const awards = [
         description: "2025년도 HCLT-KACL 공동 학술대회 국립국어원 인공지능 말평 활용 연구",
         tags: ["학술대회", "자연어처리", "문화체육관광부장관상", "국립국어원장상"],
 
-        images: { count: 7 },
+        images: { count: 14 },
         downloads: [
             { type: "pdf", file: "상장_최우수상.pdf", down: true },
             { type: "pdf", file: "상장_우수상.pdf", down: true },
