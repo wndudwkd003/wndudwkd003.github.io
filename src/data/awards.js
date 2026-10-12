@@ -2,6 +2,16 @@
 
 export const awards = [
     {
+        id: "2026-hclt-pusan",
+        title: "2026 HCLT 학술대회 AI 말평 활용연구 발표",
+        org: "HCLT 2026",
+        date: "2026-10-07",
+        description: "2026년 한글 및 한국어 정보처리 학술대회(HCLT) AI 말평 활용 논문 3편 동시 발표 및 우수 논문 수상",
+        tags: ["학술대회"],
+        images: { count: 6 },
+        downloads: [],
+    },
+    {
         id: "SIGIR-2026-07",
         title: "The 49th International ACM SIGIR Conference on Research and Development in Information Retrieval (SIGIR 2026)",
         org: "SIGIR 2026",
