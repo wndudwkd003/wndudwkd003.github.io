@@ -2,6 +2,16 @@
 
 export const awards = [
     {
+        id: "2026-gnaisw",
+        title: "제4회 경남AI·SW경진대회 입선상 수상",
+        org: "(사)경남인공지능ICT협회",
+        date: "2026-10-14",
+        description: "제4회 경남AI·SW경진대회 일반부에 참가하여 입선하였습니다. 대회운영 전반에 아쉬움이 남는 대회.. 상장에 학생부로 되어있는데 일반부로 참여하였습니다.",
+        tags: ["경진대회"],
+        images: { count: 9 },
+        downloads: [],
+    },
+    {
         id: "2026-ictc-jeju",
         title: "2026 ICTC 국제 학술대회 논문 발표",
         org: "ICTC 2026",
