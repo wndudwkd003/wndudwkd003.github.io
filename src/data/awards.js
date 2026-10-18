@@ -9,7 +9,7 @@ export const awards = [
         description: "제4회 경남AI·SW경진대회 일반부에 참가하여 입선하였습니다. 대회운영 전반에 아쉬움이 남는 대회.. 상장에 학생부로 되어있는데 일반부로 참여하였습니다.",
         tags: ["경진대회"],
         images: { count: 9 },
-        downloads: [],
+        downloads: [{ type: "pdf", file: "상장_일반부수정.pdf", down: true }, { type: "pdf", file: "상장원본.pdf", down: true }],
     },
     {
         id: "2026-ictc-jeju",
