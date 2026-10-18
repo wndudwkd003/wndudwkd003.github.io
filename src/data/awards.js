@@ -2,6 +2,16 @@
 
 export const awards = [
     {
+        id: "2026-ictc-jeju",
+        title: "2026 ICTC 국제 학술대회 논문 발표",
+        org: "ICTC 2026",
+        date: "2026-10-14",
+        description: "The 17th International Conference on ICT Convergence, 14-16 October 2026, SHERATON JEJU, Jeju Island, Korea",
+        tags: ["학술대회"],
+        images: { count: 6 },
+        downloads: [],
+    },
+    {
         id: "2026-hclt-pusan",
         title: "2026 HCLT 학술대회 AI 말평 활용연구 발표",
         org: "HCLT 2026",
