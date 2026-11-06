@@ -2,6 +2,16 @@
 
 export const awards = [
     {
+        id: "2026-kiee",
+        title: "대한전기학회 지역혁신 AI·신기술 아이디어 페스티벌 장려상 수상",
+        org: "대한전기학회",
+        date: "2026-11-02",
+        description: "대한전기학회 지역혁신 AI·신기술 아이디어 페스티벌에서 용접 로봇 VLA를 주제로 장려상을 수상하였습니다.",
+        tags: ["공모전"],
+        images: { count: 2 },
+        downloads: [{ type: "pdf", file: "상장_스캔.pdf", down: true }],
+    },
+    {
         id: "2026-gnaisw",
         title: "제4회 경남AI·SW경진대회 입선상 수상",
         org: "(사)경남인공지능ICT협회",
