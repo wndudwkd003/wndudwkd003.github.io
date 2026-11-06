@@ -73,4 +73,7 @@ export default defineConfig({
     imagetools(), // 이미지 자동 리사이즈/최적화
   ],
     base: "/", // 또는 base 항목 자체가 없어도 기본이 '/'라서 괜찮습니다.
+    build: {
+        outDir: "docs",
+    },
 });

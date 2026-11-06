@@ -10,6 +10,7 @@
     "generate-thumbnails:publications": "python python-scripts/generate_thumbnails.py --scope publications",
     "generate-thumbnails:projects": "python python-scripts/generate_thumbnails.py --scope projects",
     "build": "vite build",
+    "postbuild": "node scripts/prepare-pages.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },

@@ -12,6 +12,10 @@ dist
 dist-ssr
 *.local
 
+# Commit the locally built GitHub Pages site with the source on main.
+!/docs/
+!/docs/**
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

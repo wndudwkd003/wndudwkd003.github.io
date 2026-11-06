@@ -120,6 +120,31 @@ Generate thumbnails:
 npm run generate-thumbnails
 ```
 
+## GitHub Pages: local build on main
+
+This repository builds locally; it has no custom GitHub Actions deployment workflow.
+
+1. Run `npm ci` when setting up the project, then `npm run build`.
+2. The build creates `docs/`, including `.nojekyll` and the route entry points.
+   Commit and push this folder together with the source changes to `main`.
+   Use Git rather than browser uploads for this repository's large media files.
+3. Once the commit is pushed, open **Settings → Pages → Build and deployment**.
+   Keep **Deploy from a branch**, change the branch from **gh-pages** to **main**,
+   select **/docs** instead of **/(root)**, and save. This setup is needed only once.
+4. For later updates, run `npm run build`, then commit and push the source changes
+   and all changes under `docs/`, including deletions. No branch switching or copying
+   of build files is needed.
+
+`docs/` is intentionally tracked in Git. The old `dist/` directory is ignored
+and no longer used by the build or Pages deployment.
+
+The build includes HTML entry points for `/publications`, `/awards`, `/other`,
+and `/hidden`, so direct visits and refreshes work on static hosting.
+Use `npm run preview` to check the production build locally.
+
+GitHub still manages the Pages deployment internally. Uploading a local build
+does not guarantee that an account or billing restriction will be bypassed.
+
 ## Editing Rules
 
 - Keep shared text content in `src/data/siteText.json`
